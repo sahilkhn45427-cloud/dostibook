@@ -1,0 +1,180 @@
+<!doctype html>
+<html lang="hi">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>DostiBook</title>
+<style>
+*{box-sizing:border-box}
+body{margin:0;background:#f0f2f5;font-family:Arial,sans-serif}
+header{background:#1769e0;color:white;padding:15px;position:sticky;top:0;z-index:10}
+h1{font-size:24px;margin:0} h1 span{color:#FFD700}
+nav,main{max-width:700px;margin:auto}
+nav{display:flex;gap:8px;padding-top:12px}
+button{cursor:pointer;border:0;border-radius:9px;padding:10px 13px;font-size:15px}
+nav button{background:#ffffff30;color:white;white-space:nowrap}
+nav button.active{background:white;color:#1769e0}
+main{padding:14px 12px}
+.card{background:white;border-radius:13px;padding:14px;margin-bottom:12px}
+.row{display:flex;align-items:center;gap:10px}
+.between{justify-content:space-between}
+.avatar{width:44px;height:44px;border-radius:50%;background:#dce8ff;display:grid;place-items:center;overflow:hidden;font-size:20px;flex-shrink:0}
+.avatar img{width:100%;height:100%;object-fit:cover}
+input,textarea{width:100%;padding:11px;border:1px solid #dce1e8;border-radius:9px;font-size:15px;margin:7px 0}
+textarea{min-height:75px}
+.primary{background:#1769e0;color:white}
+.light{background:#edf3ff;color:#1556b3}
+.danger{background:#fff0f0;color:#b42318}
+.green{background:#e6f9ee;color:#0a7a3a}
+.muted{font-size:13px;color:#687386}
+.title{font-size:17px;margin:0 0 10px}
+.hidden{display:none!important}
+.stories{display:flex;gap:12px;overflow:auto;padding:5px 0}
+.story{min-width:65px;text-align:center;font-size:12px;cursor:pointer}
+.ring{border:3px solid #e1306c;border-radius:50%;padding:2px;width:62px;margin:auto auto 5px}
+.postimg,.postvideo{width:100%;max-height:400px;object-fit:contain;margin-top:8px;border-radius:10px}
+.actions{display:flex;gap:6px;border-top:1px solid #eee;padding-top:9px;margin-top:9px;flex-wrap:wrap}
+.actions button{flex:1;background:#f4f6f9;min-width:70px}
+.comment{background:#f3f5f7;padding:8px;border-radius:8px;margin:6px 0;font-size:14px}
+.story-box{display:none;background:#fff8df;border:1px solid #f2df9b;padding:10px;border-radius:10px;margin-top:10px}
+.login-wrap{max-width:400px;margin:40px auto;padding:20px}
+.login-logo{text-align:center;font-size:42px;font-weight:bold;color:#1769e0;margin-bottom:5px}
+.login-logo span{color:#FFB400}
+.login-sub{text-align:center;color:#666;margin-bottom:20px}
+</style>
+</head>
+<body>
+
+<div id="loginPage">
+<div class="login-wrap">
+<div class="login-logo">Dosti<span>Book</span></div>
+<div class="login-sub">दोस्तों की दुनिया में आपका स्वागत है 🙏</div>
+<div class="card">
+<h2 class="title">Login / नया अकाउंट</h2>
+<label class="muted">आपका नाम *</label>
+<input id="loginName" placeholder="जैसे: राम सिंह">
+<label class="muted">मोबाइल नंबर *</label>
+<input id="loginPhone" type="tel" placeholder="जैसे: 9876543210" maxlength="10">
+<label class="muted">प्रोफाइल फोटो (वैकल्पिक)</label>
+<input type="file" id="loginPhoto" accept="image/*">
+<button class="primary" id="loginBtn" style="width:100%;margin-top:10px">DostiBook में जाओ →</button>
+<div class="muted" style="text-align:center;margin-top:10px">नाम और नंबर इसी फोन में सेव रहेगा</div>
+</div>
+</div>
+</div>
+
+<div id="appPage" class="hidden">
+<header>
+<h1>Dosti<span>Book</span></h1>
+<div style="font-size:12px" id="headerUser">दोस्ती • पोस्ट • स्टोरी</div>
+<nav>
+<button class="active" data-tab="home">🏠 होम</button>
+<button data-tab="friends">👥 दोस्त</button>
+<button data-tab="profile">👤 प्रोफ़ाइल</button>
+<button id="logoutBtn" style="background:#ff5252">Logout</button>
+</nav>
+</header>
+<main>
+<section id="home">
+<div class="card">
+<div class="row between"><h2 class="title">स्टोरीज़</h2><button class="light" id="storyBtn">＋ स्टोरी जोड़ें</button></div>
+<div id="storyBox" class="story-box"><input id="storyInput" placeholder="स्टोरी लिखें..."><button class="primary" id="saveStoryBtn" style="width:100%">स्टोरी पोस्ट करें</button></div>
+<div class="stories" id="stories"></div>
+<div id="storyView" style="display:none;background:#f3f5f7;padding:10px;border-radius:10px;margin-top:10px"></div>
+</div>
+<div class="card">
+<div class="row"><div class="avatar" id="smallAvatar">🙂</div><b id="smallName">आप</b></div>
+<textarea id="postText" placeholder="आपके मन में क्या है?"></textarea>
+<label class="muted">फोटो या वीडियो जोड़ें</label>
+<input type="file" id="postFile" accept="image/*,video/*">
+<button class="primary" id="publish" style="width:100%">DostiBook पर पोस्ट करें</button>
+</div>
+<div id="feed"></div>
+</section>
+<section id="friends" class="hidden">
+<div class="card"><h2 class="title">दोस्त जोड़ें</h2><input id="friendName" placeholder="दोस्त का नाम"><button class="primary" id="addFriend">दोस्त जोड़ें</button></div>
+<div class="card"><h2 class="title">आपके दोस्त</h2><div id="friendList"></div></div>
+</section>
+<section id="profile" class="hidden">
+<div class="card"><h2 class="title">प्रोफ़ाइल</h2><div class="row"><div class="avatar" id="bigAvatar">🙂</div><div><b id="previewName">आप</b><div class="muted" id="previewPhone"></div></div></div><input id="nameInput" placeholder="अपना नाम"><input type="file" id="avatarFile" accept="image/*"><button class="primary" id="saveProfile">प्रोफ़ाइल सेव करें</button></div>
+<div class="card"><button class="danger" id="clear">DostiBook का डेटा मिटाएँ</button></div>
+</section>
+</main>
+</div>
+
+<script>
+const $=x=>document.getElementById(x);
+const read=(k,d)=>{try{let v=JSON.parse(localStorage.getItem(k));return v==null?d:v}catch(e){return d}};
+const save=(k,v)=>localStorage.setItem(k,JSON.stringify(v));
+let user=read('dostibook_user',null);
+let posts=read('dostibook_posts',[]);
+let stories=read('dostibook_stories',[]);
+let friends=read('dostibook_friends',[]);
+const esc=s=>String(s||'').replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
+const av=(p,n)=>p?'<img src="'+p+'">':esc((n||'🙂').charAt(0));
+
+function checkLogin(){
+ if(user && user.name && user.name!=='आप'){
+  $('loginPage').classList.add('hidden'); $('appPage').classList.remove('hidden');
+  $('headerUser').textContent='नमस्ते '+user.name+' • '+ (user.phone||'');
+  profileUI(); drawPosts(); drawStories(); drawFriends();
+ } else {
+  $('loginPage').classList.remove('hidden'); $('appPage').classList.add('hidden');
+ }
+}
+$('loginBtn').onclick=()=>{
+ let name=$('loginName').value.trim();
+ let phone=$('loginPhone').value.trim();
+ if(!name) return alert('कृपया अपना नाम लिखें');
+ if(!phone || phone.length<10) return alert('सही 10 अंकों का मोबाइल नंबर लिखें');
+ let f=$('loginPhoto').files[0];
+ let done=(photo)=>{
+  user={name:name,phone:phone,photo:photo||''};
+  save('dostibook_user',user); checkLogin();
+ };
+ if(f){let r=new FileReader();r.onload=()=>done(r.result);r.readAsDataURL(f);} else done('');
+};
+$('logoutBtn').onclick=()=>{localStorage.removeItem('dostibook_user');user=null;checkLogin();};
+
+function profileUI(){if(!user)return;$('smallName').textContent=user.name;$('previewName').textContent=user.name;$('previewPhone').textContent=user.phone?'+91 '+user.phone:'';$('nameInput').value=user.name;$('smallAvatar').innerHTML=av(user.photo,user.name);$('bigAvatar').innerHTML=av(user.photo,user.name);}
+function drawPosts(){
+ if(posts.length===0){$('feed').innerHTML='<div class="card">अभी कोई पोस्ट नहीं है। अपनी पहली पोस्ट करें! 😊</div>';return;}
+ let html='';
+ for(let i=posts.length-1;i>=0;i--){let p=posts[i];
+  html+='<div class="card"><div class="row between"><div class="row"><div class="avatar">'+av(p.photo,p.name)+'</div><div><b>'+esc(p.name)+'</b><div class="muted">'+new Date(p.time).toLocaleString('hi-IN')+'</div></div></div><button class="danger" data-del="'+p.id+'">हटाएँ</button></div>';
+  if(p.text) html+='<p>'+esc(p.text)+'</p>';
+  if(p.image) html+='<img class="postimg" src="'+p.image+'">';
+  if(p.video) html+='<video class="postvideo" src="'+p.video+'" controls></video>';
+  html+='<div class="actions"><button data-like="'+p.id+'">'+(p.liked?'❤️ पसंद':'♡ लाइक')+' ('+p.likes+')</button><button data-focus="'+p.id+'">💬 कमेंट ('+p.comments.length+')</button><button class="green" data-share="'+p.id+'">↗️ शेयर</button></div>';
+  p.comments.forEach(c=>{html+='<div class="comment"><b>'+esc(c.name)+':</b> '+esc(c.text)+'</div>'});
+  html+='<div class="row"><input id="c'+p.id+'" placeholder="कमेंट लिखें"><button class="light" data-comment="'+p.id+'">भेजें</button></div></div>';
+ }
+ $('feed').innerHTML=html;
+ document.querySelectorAll('[data-del]').forEach(b=>{b.onclick=()=>{posts=posts.filter(p=>String(p.id)!==String(b.getAttribute('data-del')));save('dostibook_posts',posts);drawPosts();}});
+ document.querySelectorAll('[data-like]').forEach(b=>{b.onclick=()=>{let id=b.getAttribute('data-like');posts=posts.map(p=>String(p.id)===String(id)?{...p,liked:!p.liked,likes:Math.max(0,p.likes+(p.liked?-1:1))}:p);save('dostibook_posts',posts);drawPosts();}});
+ document.querySelectorAll('[data-comment]').forEach(b=>{b.onclick=()=>{let id=b.getAttribute('data-comment');let e=$('c'+id);let t=e.value.trim();if(!t)return;posts=posts.map(p=>String(p.id)===String(id)?{...p,comments:[...p.comments,{name:user.name,text:t}]}:p);save('dostibook_posts',posts);drawPosts();}});
+ document.querySelectorAll('[data-focus]').forEach(b=>{b.onclick=()=>{let el=$('c'+b.getAttribute('data-focus'));if(el)el.focus();}});
+ document.querySelectorAll('[data-share]').forEach(b=>{b.onclick=()=>{
+  let id=b.getAttribute('data-share');let p=posts.find(x=>String(x.id)===String(id));let text='DostiBook पर '+p.name+' की पोस्ट: '+(p.text||'फोटो/वीडियो देखें')+' - DostiBook App';
+  if(navigator.share){navigator.share({title:'DostiBook',text:text}).catch(()=>{});}
+  else {let url='https://wa.me/?text='+encodeURIComponent(text);window.open(url,'_blank');}
+ }});
+}
+function drawStories(){
+ let html='';stories.forEach((s,idx)=>{html+='<div class="story" data-story="'+idx+'"><div class="ring"><div class="avatar">'+av(s.photo,s.name)+'</div></div>'+esc(s.name)+'</div>'});
+ html+='<div class="story" id="myStoryBtn"><div class="ring"><div class="avatar">＋</div></div>आप</div>';$('stories').innerHTML=html;
+ document.querySelectorAll('[data-story]').forEach(el=>{el.onclick=()=>{let s=stories[el.getAttribute('data-story')];$('storyView').style.display='block';$('storyView').innerHTML='<b>'+esc(s.name)+' की स्टोरी:</b><br>'+esc(s.text)+'<br><br><button id="closeStory" class="light">बंद करें</button> <button id="delStoryBtn" class="danger">स्टोरी हटाएँ</button>';$('closeStory').onclick=()=>{$('storyView').style.display='none';};$('delStoryBtn').onclick=()=>{stories.splice(el.getAttribute('data-story'),1);save('dostibook_stories',stories);$('storyView').style.display='none';drawStories();};}});
+ let myBtn=$('myStoryBtn'); if(myBtn) myBtn.onclick=()=>{$('storyBox').style.display='block';};
+}
+$('storyBtn').onclick=()=>{let box=$('storyBox');box.style.display=box.style.display==='block'?'none':'block';};
+$('saveStoryBtn').onclick=()=>{let t=$('storyInput').value.trim();if(!t)return;stories.push({name:user.name,photo:user.photo,text:t});save('dostibook_stories',stories);$('storyInput').value='';$('storyBox').style.display='none';drawStories();};
+$('publish').onclick=()=>{let t=$('postText').value.trim();let f=$('postFile').files[0];if(!t&&!f)return;const done=(img,vid)=>{posts.push({id:Date.now().toString(),name:user.name,photo:user.photo,text:t,image:img,video:vid,likes:0,liked:false,comments:[],time:Date.now()});save('dostibook_posts',posts);$('postText').value='';$('postFile').value='';drawPosts();};if(f){let r=new FileReader();r.onload=()=>{if(f.type.startsWith('video/')) done('',r.result); else done(r.result,'');};r.readAsDataURL(f);}else done('','');};
+$('saveProfile').onclick=()=>{user.name=$('nameInput').value.trim()||user.name;let f=$('avatarFile').files[0];let done=()=>{save('dostibook_user',user);profileUI();drawStories();};if(f){let r=new FileReader();r.onload=()=>{user.photo=r.result;done();};r.readAsDataURL(f);}else done();};
+$('addFriend').onclick=()=>{let n=$('friendName').value.trim();if(!n)return;friends.push({id:Date.now(),name:n});save('dostibook_friends',friends);$('friendName').value='';drawFriends();};
+function drawFriends(){$('friendList').innerHTML=friends.length?friends.map(f=>'<div class="row between" style="padding:8px"><b>'+esc(f.name)+'</b><button class="danger" data-fdel="'+f.id+'">हटाएँ</button></div>').join(''):'अभी कोई दोस्त नहीं जोड़ा गया।';document.querySelectorAll('[data-fdel]').forEach(b=>{b.onclick=()=>{friends=friends.filter(f=>String(f.id)!==String(b.getAttribute('data-fdel')));save('dostibook_friends',friends);drawFriends();}});}
+document.querySelectorAll('nav button[data-tab]').forEach(b=>{b.onclick=()=>{document.querySelectorAll('nav button[data-tab]').forEach(x=>x.classList.toggle('active',x===b));['home','friends','profile'].forEach(x=>$(x).classList.toggle('hidden',x!==b.dataset.tab));};});
+$('clear').onclick=()=>{['dostibook_user','dostibook_posts','dostibook_stories','dostibook_friends'].forEach(k=>localStorage.removeItem(k));location.reload();};
+checkLogin();
+</script>
+</body>
+</html>
