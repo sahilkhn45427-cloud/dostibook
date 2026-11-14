@@ -1,54 +1,76 @@
 <!DOCTYPE html>
 <html lang="hi"><head><meta charset="UTF-8"><meta name="viewport" content="width=device-width,initial-scale=1">
-<title>DostiBook - Facebook Jaisa App</title>
+<title>DostiBook</title>
 <style>
-*{box-sizing:border-box}body{margin:0;font-family:Arial;background:#f0f2f5}
-.top{background:#1877f2;color:#fff;padding:10px 12px;display:flex;align-items:center;gap:10px;position:sticky;top:0;z-index:10}
-.top b{font-size:22px}.top input{flex:1;padding:8px;border-radius:20px;border:0;outline:none}
-.dp{width:42px;height:42px;border-radius:50%;object-fit:cover;background:#fff;cursor:pointer;border:2px solid #fff}
+*{box-sizing:border-box}body{margin:0;font-family:Arial;background:#f0f2f5;color:#111}
+body.dark{background:#18191a;color:#eee}body.dark .card{background:#242526;color:#eee}body.dark .comment{background:#3a3b3c}body.dark .actions button{background:#3a3b3c;color:#fff}
+.top{background:#1877f2;color:#fff;padding:10px;display:flex;gap:8px;align-items:center;position:sticky;top:0;z-index:10}
+.top b{font-size:22px}.top input{flex:1;padding:8px;border-radius:20px;border:0}
+.dp{width:42px;height:42px;border-radius:50%;object-fit:cover;border:2px solid #fff}
 .wrap{max-width:520px;margin:auto;padding:10px}
-.card{background:#fff;border-radius:12px;padding:12px;margin-bottom:12px;box-shadow:0 1px 3px #0002}
+.card{background:#fff;border-radius:12px;padding:12px;margin-bottom:12px}
 .row{display:flex;gap:10px;align-items:center}
-input,textarea{width:100%;padding:10px;border-radius:10px;border:1px solid #ddd;outline:none;margin-top:8px}
-.btn{background:#1877f2;color:#fff;border:0;padding:10px 14px;border-radius:20px;font-weight:bold;width:100%;margin-top:8px;cursor:pointer}
+input,textarea{width:100%;padding:10px;border-radius:10px;border:1px solid #ddd;margin-top:8px;outline:none}
+.btn{background:#1877f2;color:#fff;border:0;padding:11px;border-radius:20px;font-weight:bold;width:100%;margin-top:8px;cursor:pointer}
 .btn2{background:#e4e6eb;color:#000}
 .postimg{width:100%;border-radius:10px;margin-top:10px;max-height:380px;object-fit:cover}
-.actions{display:flex;gap:6px;margin-top:10px}.actions button{flex:1;padding:8px;border:0;border-radius:20px;background:#f0f2f5;cursor:pointer;font-weight:bold}
+.actions{display:flex;gap:6px;margin-top:10px}.actions button{flex:1;padding:8px;border:0;border-radius:20px;background:#f0f2f5;font-weight:bold;cursor:pointer}
 .friend{display:flex;align-items:center;gap:10px;padding:8px 0;border-bottom:1px solid #eee}.friend img{width:48px;height:48px;border-radius:50%;object-fit:cover}
 .friend button{margin-left:auto;background:#1877f2;color:#fff;border:0;padding:7px 12px;border-radius:20px;font-weight:bold}
 .comment{background:#f0f2f5;padding:7px 10px;border-radius:12px;margin-top:6px;font-size:14px}
-.tabs{display:flex;gap:6px}.tabs button{flex:1}
+.tabs{display:flex;gap:5px;flex-wrap:wrap}.tabs button{flex:1;min-width:70px}
 .hidden{display:none}
+.stories{display:flex;gap:10px;overflow:auto;padding:5px 0}.story{min-width:70px;text-align:center;font-size:12px;cursor:pointer}.ring{border:3px solid #e1306c;border-radius:50%;padding:2px;width:62px;margin:auto}.ring img{width:56px;height:56px;border-radius:50%;object-fit:cover}
+.chatbox{height:280px;overflow:auto;background:#f0f2f5;padding:10px;border-radius:10px}body.dark .chatbox{background:#18191a}
+.msg{background:#fff;padding:8px 10px;border-radius:12px;margin:5px 0;max-width:80%}body.dark .msg{background:#3a3b3c}.me{margin-left:auto;background:#1877f2;color:#fff}
+.login{max-width:400px;margin:60px auto;padding:20px;text-align:center}.login h1{font-size:40px;color:#1877f2;margin:0}.login h1 span{color:#FFD700}
 </style></head>
 <body>
-<div class="top"><b>DostiBook</b><input id="search" placeholder="Search दोस्त... 🔍"><label><img id="myDP" class="dp" src="https://i.pravatar.cc/100?img=12"><input type="file" accept="image/*" hidden onchange="setDP(event)"></label></div>
+<div id="loginPage" class="login card"><h1>Dosti<span>Book</span></h1><p>दोस्तों की दुनिया में आपका स्वागत है 🙏</p><input id="loginName" placeholder="अपना नाम लिखो"><input id="loginNum" placeholder="मोबाइल नंबर"><button class="btn" onclick="doLogin()">Login / Signup ➡️</button><p style="font-size:13px;color:#666">Login करते ही तुम्हारा नाम और DP सेव हो जाएगा</p></div>
+
+<div id="mainApp" class="hidden">
+<div class="top"><b>DostiBook</b><input placeholder="Search... 🔍"><button onclick="toggleDark()" style="border:0;border-radius:50%;width:36px;height:36px">🌙</button><label><img id="myDP" class="dp" src="https://i.pravatar.cc/100?img=12"><input type="file" accept="image/*" hidden onchange="setDP(event)"></label></div>
 <div class="wrap">
-<div class="card"><div class="tabs"><button class="btn" onclick="showTab('home')">🏠 Home</button><button class="btn btn2" onclick="showTab('friends')">👥 Friends</button><button class="btn btn2" onclick="showTab('profile')">👤 Profile</button></div></div>
+<div class="card"><div class="tabs"><button class="btn" onclick="showTab('home')">🏠 Home</button><button class="btn btn2" onclick="showTab('friends')">👥 Friends</button><button class="btn btn2" onclick="showTab('chat')">💬 Chat</button><button class="btn btn2" onclick="showTab('profile')">👤 Profile</button></div></div>
+
 <div id="homeTab">
-<div class="card"><div class="row"><img id="myDP2" class="dp" src="https://i.pravatar.cc/100?img=12"><b id="myName">Sahil Kahn</b></div>
-<textarea id="postText" placeholder="आपके मन में क्या है, Sahil?"></textarea>
-<input type="file" id="postPhoto" accept="image/*"><img id="preview" class="postimg hidden">
-<button class="btn" onclick="addPost()">📝 DostiBook पर पोस्ट करें</button></div>
-<div id="posts"></div>
-</div>
+<div class="card"><div class="row"><b>📸 Stories</b><button style="margin-left:auto" onclick="addStory()">+ Story</button></div><div class="stories" id="stories"></div></div>
+<div class="card"><div class="row"><img id="myDP2" class="dp" src="https://i.pravatar.cc/100?img=12"><b id="myName">Sahil Kahn</b></div><textarea id="postText" placeholder="आपके मन में क्या है?"></textarea><input type="file" id="postPhoto" accept="image/*"><img id="preview" class="postimg hidden"><button class="btn" onclick="addPost()">📝 Post करें</button></div>
+<div id="posts"></div></div>
+
 <div id="friendsTab" class="hidden"><div class="card"><h3>👥 Friend Requests</h3><div id="requests"></div><h3>✅ My Friends (<span id="fcount">0</span>)</h3><div id="myFriends"></div></div></div>
-<div id="profileTab" class="hidden"><div class="card" style="text-align:center"><label><img id="myDP3" class="dp" style="width:100px;height:100px" src="https://i.pravatar.cc/100?img=12"><br><small>DP बदलने के लिए फोटो पर दबाओ</small><input type="file" accept="image/*" hidden onchange="setDP(event)"></label><h2 id="myName2">Sahil Kahn</h2><p>📍 Pokaran, Rajasthan • 👥 <span id="fcount2">0</span> Friends</p><input id="nameInput" placeholder="अपना नाम बदलो"><button class="btn" onclick="saveName()">नाम Save करो</button></div></div>
-</div>
+
+<div id="chatTab" class="hidden"><div class="card"><h3>💬 Messenger</h3><div class="row"><select id="chatFriend" style="padding:10px;border-radius:10px;flex:1"><option>Rahul Sharma</option><option>Priya Singh</option><option>Amit Kumar</option><option>Neha Verma</option></select></div><div class="chatbox" id="chatBox"></div><div class="row"><input id="chatInput" placeholder="Message लिखो..."><button style="width:70px" class="btn" onclick="sendChat()">Send</button></div></div></div>
+
+<div id="profileTab" class="hidden"><div class="card" style="text-align:center"><label><img id="myDP3" class="dp" style="width:100px;height:100px" src="https://i.pravatar.cc/100?img=12"><br><small>DP बदलने के लिए दबाओ</small><input type="file" accept="image/*" hidden onchange="setDP(event)"></label><h2 id="myName2">Sahil Kahn</h2><p>📍 Pokaran • 👥 <span id="fcount2">0</span> Friends</p><input id="nameInput" placeholder="नाम बदलो"><button class="btn" onclick="saveName()">नाम Save करो</button><button class="btn btn2" onclick="logout()">Logout</button></div></div>
+</div></div>
+
 <script>
 let friends=[{name:"Rahul Sharma",img:"https://i.pravatar.cc/100?img=13"},{name:"Priya Singh",img:"https://i.pravatar.cc/100?img=47"},{name:"Amit Kumar",img:"https://i.pravatar.cc/100?img=33"},{name:"Neha Verma",img:"https://i.pravatar.cc/100?img=44"},{name:"Vikash Yadav",img:"https://i.pravatar.cc/100?img=59"}];
-let myFriends=[];let posts=JSON.parse(localStorage.getItem('db_posts')||'[]');let myDP=localStorage.getItem('db_dp')||"https://i.pravatar.cc/100?img=12";let myName=localStorage.getItem('db_name')||"Sahil Kahn";
-function save(){localStorage.setItem('db_posts',JSON.stringify(posts));localStorage.setItem('db_dp',myDP);localStorage.setItem('db_name',myName);}
-function showTab(t){['home','friends','profile'].forEach(x=>document.getElementById(x+'Tab').classList.toggle('hidden',x!==t));}
+let myFriends=[];let posts=JSON.parse(localStorage.getItem('db_posts')||'[]');let stories=JSON.parse(localStorage.getItem('db_stories')||'[]');let chats=JSON.parse(localStorage.getItem('db_chats')||'[]');let myDP=localStorage.getItem('db_dp')||"https://i.pravatar.cc/100?img=12";let myName=localStorage.getItem('db_name')||"";
+if(myName){document.getElementById('loginPage').classList.add('hidden');document.getElementById('mainApp').classList.remove('hidden');}
+function doLogin(){let n=document.getElementById('loginName').value.trim();if(!n)return alert('नाम लिखो');myName=n;localStorage.setItem('db_name',n);document.getElementById('loginPage').classList.add('hidden');document.getElementById('mainApp').classList.remove('hidden');updateNames();alert('Welcome '+n+'! 🎉');}
+function logout(){localStorage.removeItem('db_name');location.reload();}
+function save(){localStorage.setItem('db_posts',JSON.stringify(posts));localStorage.setItem('db_stories',JSON.stringify(stories));localStorage.setItem('db_chats',JSON.stringify(chats));localStorage.setItem('db_dp',myDP);localStorage.setItem('db_name',myName);}
+function showTab(t){['home','friends','chat','profile'].forEach(x=>document.getElementById(x+'Tab').classList.toggle('hidden',x!==t));}
+function toggleDark(){document.body.classList.toggle('dark');}
 function setDP(e){let r=new FileReader();r.onload=()=>{myDP=r.result;document.querySelectorAll('#myDP,#myDP2,#myDP3').forEach(i=>i.src=myDP);save();};r.readAsDataURL(e.target.files[0]);}
-function saveName(){myName=document.getElementById('nameInput').value||myName;document.getElementById('myName').textContent=myName;document.getElementById('myName2').textContent=myName;save();alert('नाम Save हो गया!')}
+function saveName(){myName=document.getElementById('nameInput').value||myName;updateNames();save();alert('Save हो गया!');}
+function updateNames(){document.getElementById('myName').textContent=myName;document.getElementById('myName2').textContent=myName;}
+function addStory(){let t=prompt('Story में क्या लिखना है?');if(!t)return;stories.unshift({name:myName,dp:myDP,text:t});save();renderStories();}
+function renderStories(){document.getElementById('stories').innerHTML=`<div class="story" onclick="addStory()"><div class="ring"><img src="${myDP}"></div>Your Story<br>+ Add</div>`+stories.map(s=>`<div class="story" onclick="alert('${s.text} - by ${s.name}')"><div class="ring"><img src="${s.dp}"></div>${s.name}</div>`).join('');}
 document.getElementById('postPhoto').onchange=e=>{let r=new FileReader();r.onload=()=>{let p=document.getElementById('preview');p.src=r.result;p.classList.remove('hidden');p.dataset.img=r.result;};r.readAsDataURL(e.target.files[0]);};
 function addPost(){let t=document.getElementById('postText').value;let img=document.getElementById('preview').dataset.img||"";if(!t&&!img)return alert('कुछ लिखो या फोटो चुनो');posts.unshift({name:myName,dp:myDP,text:t,img:img,likes:0,liked:false,comments:[],time:new Date().toLocaleString('hi-IN')});document.getElementById('postText').value="";document.getElementById('preview').classList.add('hidden');document.getElementById('preview').dataset.img="";save();renderPosts();}
-function renderPosts(){document.getElementById('posts').innerHTML=posts.map((p,i)=>`<div class="card"><div class="row"><img class="dp" src="${p.dp}"><div><b>${p.name}</b><br><small>${p.time}</small></div></div>${p.text?`<p>${p.text}</p>`:''}${p.img?`<img class="postimg" src="${p.img}">`:''}<div class="actions"><button onclick="like(${i})">${p.liked?'❤️':'🤍'} Like (${p.likes})</button><button onclick="document.getElementById('c${i}').focus()">💬 Comment (${p.comments.length})</button><button onclick="sharePost(${i})">↗️ Share</button></div><div>${p.comments.map(c=>`<div class="comment"><b>${c.n}:</b> ${c.t}</div>`).join('')}</div><div class="row"><input id="c${i}" placeholder="कमेंट लिखो..."><button style="width:70px" class="btn" onclick="addComment(${i})">Send</button></div></div>`).join('')||'<div class="card">अभी कोई पोस्ट नहीं है। पहली पोस्ट करो!</div>';}
+function renderPosts(){document.getElementById('posts').innerHTML=posts.map((p,i)=>`<div class="card"><div class="row"><img class="dp" src="${p.dp}"><div><b>${p.name}</b><br><small>${p.time}</small></div><button style="margin-left:auto;border:0;background:#ffecec;padding:6px 10px;border-radius:10px" onclick="delPost(${i})">🗑️ Delete</button></div>${p.text?`<p>${p.text}</p>`:''}${p.img?`<img class="postimg" src="${p.img}">`:''}<div class="actions"><button onclick="like(${i})">${p.liked?'❤️':'🤍'} Like (${p.likes})</button><button onclick="document.getElementById('c${i}').focus()">💬 Comment (${p.comments.length})</button><button onclick="sharePost()">↗️ Share</button></div><div>${p.comments.map(c=>`<div class="comment"><b>${c.n}:</b> ${c.t}</div>`).join('')}</div><div class="row"><input id="c${i}" placeholder="कमेंट लिखो..."><button style="width:70px" class="btn" onclick="addComment(${i})">Send</button></div></div>`).join('')||'<div class="card">अभी कोई पोस्ट नहीं है।</div>';}
+function delPost(i){if(confirm('पोस्ट हटाऊँ?')){posts.splice(i,1);save();renderPosts();}}
 function like(i){posts[i].liked=!posts[i].liked;posts[i].likes+=posts[i].liked?1:-1;save();renderPosts();}
 function addComment(i){let v=document.getElementById('c'+i).value;if(!v)return;posts[i].comments.push({n:myName,t:v});save();renderPosts();}
-function sharePost(i){navigator.clipboard?.writeText(location.href);alert('लिंक Copy हो गया! दोस्तों को भेज दो');}
-function renderFriends(){document.getElementById('requests').innerHTML=friends.map((f,i)=>`<div class="friend"><img src="${f.img}"><b>${f.name}</b><button onclick="accept(${i})">Accept</button><button style="background:#e4e6eb;color:#000" onclick="reject(${i})">Delete</button></div>`).join('')||'कोई Request नहीं है';document.getElementById('myFriends').innerHTML=myFriends.map(f=>`<div class="friend"><img src="${f.img}"><b>${f.name}</b><span style="margin-left:auto">✅ Friend</span></div>`).join('')||'अभी कोई Friend नहीं है';document.getElementById('fcount').textContent=myFriends.length;document.getElementById('fcount2').textContent=myFriends.length;}
+function sharePost(){alert('लिंक Copy हो गया!');}
+function renderFriends(){document.getElementById('requests').innerHTML=friends.map((f,i)=>`<div class="friend"><img src="${f.img}"><b>${f.name}</b><button onclick="accept(${i})">Accept</button><button style="background:#e4e6eb;color:#000" onclick="reject(${i})">Delete</button></div>`).join('')||'कोई Request नहीं';document.getElementById('myFriends').innerHTML=myFriends.map(f=>`<div class="friend"><img src="${f.img}"><b>${f.name}</b><span style="margin-left:auto">✅ Friend</span></div>`).join('')||'अभी कोई Friend नहीं';document.getElementById('fcount').textContent=myFriends.length;document.getElementById('fcount2').textContent=myFriends.length;}
 function accept(i){myFriends.push(friends[i]);friends.splice(i,1);renderFriends();alert('Friend बन गया! 🎉');}
 function reject(i){friends.splice(i,1);renderFriends();}
-document.querySelectorAll('#myDP,#myDP2,#myDP3').forEach(i=>i.src=myDP);document.getElementById('myName').textContent=myName;document.getElementById('myName2').textContent=myName;renderPosts();renderFriends();
+function sendChat(){let v=document.getElementById('chatInput').value;if(!v)return;let f=document.getElementById('chatFriend').value;chats.push({to:f,text:v,from:myName});document.getElementById('chatInput').value="";save();renderChat();setTimeout(()=>{chats.push({to:f,text:"Haan bhai, sahi hai! 😄",from:f});save();renderChat();},800);}
+function renderChat(){let f=document.getElementById('chatFriend').value;document.getElementById('chatBox').innerHTML=chats.filter(c=>c.to===f||c.from===f).map(c=>`<div class="msg ${c.from===myName?'me':''}"><b>${c.from}:</b> ${c.text}</div>`).join('')||'<p>अभी कोई मैसेज नहीं है। Hi लिख के भेजो!</p>';document.getElementById('chatBox').scrollTop=9999;}
+document.getElementById('chatFriend').onchange=renderChat;
+document.querySelectorAll('#myDP,#myDP2,#myDP3').forEach(i=>i.src=myDP);if(myName)updateNames();renderPosts();renderFriends();renderStories();renderChat();
 </script></body></html>
