@@ -1,98 +1,147 @@
 <!DOCTYPE html>
-<html lang="hi"><head><meta charset="UTF-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<html lang="hi">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>DostiBook - Apni Duniya</title>
 <style>
-*{box-sizing:border-box}
-body{margin:0;font-family:'Segoe UI',Arial;background:#FFF5F7}
-.top{background:linear-gradient(90deg,#7B2FF7,#FF2E63);padding:12px 14px;display:flex;align-items:center;position:sticky;top:0;z-index:10;color:#fff}
-.logo{font-size:24px;font-weight:900}
-.logo small{display:block;font-size:11px;opacity:.9;font-weight:400;letter-spacing:1px}
-.top-right{margin-left:auto;font-size:22px;display:flex;gap:14px}
-.menu{background:#fff;display:flex;box-shadow:0 2px 8px #0001;position:sticky;top:57px;z-index:9}
-.menu button{flex:1;border:0;background:#fff;font-size:11px;font-weight:bold;padding:10px 0;color:#666;cursor:pointer}
-.menu button span{font-size:20px;display:block}
-.menu button.active{color:#7B2FF7;border-bottom:3px solid #FF2E63}
-.card{background:#fff;margin:10px;padding:14px;border-radius:18px;box-shadow:0 2px 10px #0001}
-.row{display:flex;gap:10px;align-items:center}
-.dp{width:42px;height:42px;border-radius:50%;object-fit:cover;border:2px solid #FF2E63}
-.think{flex:1;background:#FFF0F3;border-radius:20px;padding:11px 13px;color:#777;font-size:14px}
-.stories{display:flex;gap:12px;overflow:auto;padding:4px}
-.story{width:105px;height:175px;border-radius:18px;overflow:hidden;position:relative;flex-shrink:0;box-shadow:0 4px 12px #0002;cursor:pointer;border:3px solid #fff}
-.story img,.story video{width:100%;height:100%;object-fit:cover}
-.story .grad{position:absolute;inset:0;background:linear-gradient(180deg,transparent 40%,#000a)}
-.story span{position:absolute;bottom:8px;left:8px;color:#fff;font-weight:bold;font-size:13px;z-index:2}
-.story .sdp{position:absolute;top:8px;left:8px;width:34px;height:34px;border-radius:50%;border:3px solid #FF2E63;object-fit:cover;z-index:2}
-.plus{position:absolute;top:70px;left:32px;background:#FF2E63;color:#fff;width:40px;height:40px;border-radius:50%;display:grid;place-items:center;font-size:24px;border:3px solid #fff;z-index:2}
-.postimg,.postvid{width:100%;margin-top:10px;border-radius:14px;max-height:380px;object-fit:cover}
-.actions{display:flex;gap:6px;margin-top:10px}
-.actions button{flex:1;border:0;background:#F8F0FF;padding:10px;border-radius:14px;font-size:14px;font-weight:bold;cursor:pointer}
-.actions button:first-child{background:#FFE4EC}
-input,textarea,select{width:100%;padding:11px;border:1px solid #eee;border-radius:12px;margin-top:8px;outline:none}
-.btn{background:linear-gradient(90deg,#7B2FF7,#FF2E63);color:#fff;border:0;padding:12px;border-radius:20px;font-weight:bold;width:100%;margin-top:8px;cursor:pointer}
-.btn2{background:#eee;color:#000}
-.hidden{display:none}
-.comment{background:#FFF0F3;padding:8px 11px;border-radius:14px;margin-top:6px;font-size:14px}
-.chip{display:inline-block;background:#F3E8FF;padding:5px 10px;border-radius:20px;font-size:12px;font-weight:bold;margin:2px}
-</style></head>
+*{margin:0;padding:0;box-sizing:border-box;font-family:'Segoe UI',sans-serif}
+body{background:#FFF5F7;padding-bottom:90px}
+.top{background:linear-gradient(135deg,#FF3D68,#FF8A00);color:white;padding:18px 16px 22px;border-radius:0 0 28px 28px;position:sticky;top:0;z-index:10}
+.top h1{font-size:28px;letter-spacing:1px}.top p{font-size:13px;opacity:.9}
+.profile-card{background:white;margin:-10px 16px 12px;padding:14px;border-radius:22px;display:flex;align-items:center;gap:12px;box-shadow:0 4px 20px rgba(0,0,0,.08)}
+.profile-card img{width:62px;height:62px;border-radius:50%;object-fit:cover;border:3px solid #FF3D68;cursor:pointer}
+.profile-card b{font-size:17px}.profile-card span{font-size:12px;color:#888}
+.btn{background:linear-gradient(135deg,#FF3D68,#FF8A00);color:white;border:none;padding:7px 14px;border-radius:20px;font-weight:700;cursor:pointer}
+.card{background:white;margin:12px 16px;padding:14px;border-radius:22px;box-shadow:0 4px 18px rgba(0,0,0,.06)}
+.card textarea{width:100%;border:1px solid #eee;border-radius:14px;padding:10px;outline:none;resize:none;font-size:15px}
+.chip{display:inline-block;background:#FFF0F3;color:#FF3D68;padding:7px 12px;border-radius:20px;font-size:13px;font-weight:700;margin:4px 4px 0 0;cursor:pointer;border:1px solid #FFD9E2}
+.stories{display:flex;gap:12px;overflow-x:auto;padding:4px 2px}
+.story{flex:0 0 78px;text-align:center;cursor:pointer}
+.story img,.story video{width:68px;height:68px;border-radius:50%;object-fit:cover;border:3px solid #FF8A00}
+.story p{font-size:11px;margin-top:4px;font-weight:600}
+.post-img{width:100%;border-radius:16px;margin-top:10px;max-height:320px;object-fit:cover}
+.post-actions{display:flex;justify-content:space-between;margin-top:10px}
+.post-actions button{border:none;background:#FFF0F3;padding:8px 14px;border-radius:20px;font-weight:700;cursor:pointer}
+.bottom{position:fixed;bottom:12px;left:12px;right:12px;background:white;display:flex;justify-content:space-around;padding:12px;border-radius:30px;box-shadow:0 8px 30px rgba(0,0,0,.15);z-index:20}
+.bottom button{border:none;background:none;font-size:20px;cursor:pointer}.bottom button.active{transform:scale(1.2)}
+.hidden{display:none} input[type=file]{display:none}
+.friend{display:flex;align-items:center;gap:10px;padding:10px 0;border-bottom:1px solid #f2f2f2}
+.friend img{width:48px;height:48px;border-radius:50%;object-fit:cover}
+</style>
+</head>
 <body>
 
-<div class="top"><div class="logo">DostiBook<small>APNI DUNIYA • APNE LOG</small></div><div class="top-right"><span>🔍</span><span>🔔</span><span>💬</span></div></div>
-<div class="menu">
-<button class="active" onclick="showTab('home',this)"><span>🏠</span>Home</button>
-<button onclick="showTab('friends',this)"><span>👥</span>Dost</button>
-<button onclick="showTab('chat',this)"><span>💬</span>Chat</button>
-<button onclick="showTab('profile',this)"><span>👤</span>Profile</button>
+<div class="top">
+<h1>DostiBook 💕</h1>
+<p>Apni Duniya • Apne Log</p>
 </div>
 
-<div id="homeTab">
-<div class="card"><div class="row"><img class="dp" src="https://i.pravatar.cc/100?img=12"><div class="think" onclick="document.getElementById('postText').focus()">आज क्या मस्त हुआ? बताओ... ✨</div><span style="font-size:22px">🖼️</span></div><div><span class="chip">📸 Photo</span><span class="chip">🎥 Video</span><span class="chip">😍 Feeling</span><span class="chip">📍 Location</span></div></div>
-
-<div class="card">
-<div style="display:flex;justify-content:space-between;align-items:center"><b>🔥 Aaj ki Stories</b><button style="border:0;background:#FF2E63;color:#fff;padding:6px 12px;border-radius:20px" onclick="document.getElementById('storyFile').click()">+ Story डालो</button></div>
-<input type="file" id="storyFile" accept="image/*,video/*" class="hidden">
-<div class="stories" id="storiesBox">
-<div class="story" onclick="document.getElementById('storyFile').click()"><img src="https://images.unsplash.com/photo-1506794778202-cad84cf45f1d?w=400"><div class="plus">+</div><div class="grad"></div><span>Story बनाएँ</span></div>
-<div class="story"><img src="https://images.unsplash.com/photo-1529626455594-4ff0802cfb7e?w=400"><img class="sdp" src="https://i.pravatar.cc/100?img=12"><div class="grad"></div><span>Sahil • 2h</span></div>
-<div class="story"><video src="https://www.w3schools.com/html/mov_bbb.mp4" muted autoplay loop></video><img class="sdp" src="https://i.pravatar.cc/100?img=32"><div class="grad"></div><span>Hayat • Video 🎥</span></div>
-<div class="story"><img src="https://images.unsplash.com/photo-1519741497674-611481863552?w=400"><img class="sdp" src="https://i.pravatar.cc/100?img=47"><div class="grad"></div><span>Priya • 1h</span></div>
-</div>
-<p style="font-size:12px;color:#888;margin:5px 0 0">👆 Story पर क्लिक करो, Photo या Video चुनो - वो ऊपर आ जाएगी!</p>
+<!-- HOME -->
+<div id="page-home">
+<div class="profile-card">
+<img id="myPic" src="https://via.placeholder.com/150/FF3D68/fff?text=You" onclick="document.getElementById('profileInput').click()">
+<div style="flex:1"><b id="myName">Sahil Kahn</b><br><span id="myBio">DostiBook Star • Jodhpur</span></div>
+<button class="btn" onclick="editProfile()">Edit</button>
+<input type="file" id="profileInput" accept="image/*" onchange="changeProfile(event)">
 </div>
 
 <div class="card">
-<div class="row"><img class="dp" src="https://i.pravatar.cc/100?img=12"><b id="myName">Sahil Kahn</b><span style="background:#FFE4EC;padding:4px 8px;border-radius:10px;font-size:11px">⭐ DostiBook Star</span></div>
-<textarea id="postText" placeholder="DostiBook पर कुछ मस्त लिखो... #dostibook"></textarea>
-<input type="file" id="postFile" accept="image/*,video/*">
-<img id="prev" class="postimg hidden"><video id="prevV" class="postvid hidden" controls></video>
-<button class="btn" onclick="addPost()">✨ DostiBook पर Post करो</button>
+<b>✨ Aaj ki Story</b>
+<div class="stories" id="storyList">
+<div class="story" onclick="document.getElementById('storyInput').click()">
+<img src="https://via.placeholder.com/150/FF8A00/fff?text=+"><p>+ Story</p>
 </div>
-
-<div id="posts"></div>
+</div>
+<input type="file" id="storyInput" accept="image/*,video/*" onchange="addStory(event)">
+<p style="font-size:12px;color:#999;margin-top:6px">Story पर क्लिक करके फोटो / वीडियो डालो, वो यहीं दिखेगी</p>
+</div>
 
 <div class="card">
-<div class="row"><img class="dp" src="https://i.pravatar.cc/100?img=68"><div><b>Manoj Kumar</b><br><small style="color:#888">1 दिन पहले • Pokaran</small></div><div style="margin-left:auto">⋯</div></div>
-<p>99% log fail ho gaye 😱😱 <span style="color:#7B2FF7">#dostibook #tips #viral</span></p>
-<img class="postimg" src="https://images.unsplash.com/photo-1504307651254-35680f356dfd?w=800">
-<div class="actions"><button>❤️ Like</button><button>💬 Comment</button><button>↗️ Share</button></div>
+<textarea id="postText" rows="3" placeholder="Aaj kya masti hui? Likho..."></textarea>
+<img id="postPreview" class="post-img hidden">
+<div style="margin-top:10px">
+<label class="chip" for="postImgInput">📸 Photo Chuno</label>
+<input type="file" id="postImgInput" accept="image/*" onchange="previewPost(event)">
+<button class="btn" style="float:right" onclick="addPost()">Post Karo 🚀</button>
 </div>
 </div>
 
-<div id="friendsTab" class="hidden">
-<div class="card"><h3>👥 Dost Banao</h3>
-<div class="row" style="padding:10px 0"><img class="dp" src="https://i.pravatar.cc/100?img=13"><div><b>Rahul Sharma</b><br><small>12 Mutual Friends</small></div><button style="margin-left:auto;background:#7B2FF7;color:#fff;border:0;padding:8px 14px;border-radius:20px" onclick="alert('Dost बन गया! 🎉')">Add Dost</button></div>
-<div class="row" style="padding:10px 0"><img class="dp" src="https://i.pravatar.cc/100?img=47"><div><b>Priya Singh</b><br><small>8 Mutual Friends</small></div><button style="margin-left:auto;background:#7B2FF7;color:#fff;border:0;padding:8px 14px;border-radius:20px" onclick="alert('Dost बन गया! 🎉')">Add Dost</button></div>
-</div></div>
+<div id="postFeed"></div>
+<div class="card" style="text-align:center;color:#999;font-size:13px">Abhi koi post nahi hai.<br>Upar se apni pehli post daalo!</div>
+</div>
 
-<div id="chatTab" class="hidden"><div class="card"><h3>💬 Dosti Chat</h3><select id="chatF"><option>Rahul Sharma</option><option>Priya Singh</option><option>Amit Kumar</option></select><div id="chatBox" style="height:240px;overflow:auto;background:#FFF5F7;padding:10px;border-radius:12px;margin-top:8px"><p>Hi भेजो...</p></div><div class="row"><input id="chatIn" placeholder="Message..."><button style="width:70px" class="btn" onclick="sendChat()">Send</button></div></div></div>
+<!-- DOST -->
+<div id="page-dost" class="hidden">
+<div class="card"><h3>👥 Mere Dost (0)</h3><p style="color:#888;font-size:13px;margin-top:6px">Abhi koi dost nahi hai. Link share karo, dost judenge tab yahan dikhenge.</p><button class="btn" style="margin-top:10px" onclick="shareApp()">Link Share Karo</button></div>
+</div>
 
-<div id="profileTab" class="hidden"><div class="card" style="text-align:center;background:linear-gradient(180deg,#F3E8FF,#fff)"><img class="dp" style="width:110px;height:110px;border:4px solid #7B2FF7" src="https://i.pravatar.cc/100?img=12"><h2>Sahil Kahn</h2><p>📍 Pokaran • ⭐ DostiBook Star • 1.2K Dost</p><input id="nameIn" placeholder="अपना नाम लिखो"><button class="btn" onclick="saveName()">नाम बदलो</button></div></div>
+<!-- CHAT -->
+<div id="page-chat" class="hidden">
+<div class="card"><h3>💬 Chat</h3><p style="color:#888;font-size:13px;margin-top:6px">Jab dost judenge tab yahan chat hogi.</p></div>
+</div>
+
+<!-- PROFILE -->
+<div id="page-profile" class="hidden">
+<div class="card" style="text-align:center">
+<img id="myPic2" src="https://via.placeholder.com/150/FF3D68/fff?text=You" style="width:100px;height:100px;border-radius:50%;object-fit:cover;border:4px solid #FF3D68" onclick="document.getElementById('profileInput').click()">
+<h2 id="myName2" style="margin-top:8px">Sahil Kahn</h2><p id="myBio2" style="color:#888;font-size:13px">DostiBook Star • Jodhpur</p>
+<button class="btn" style="margin-top:10px" onclick="document.getElementById('profileInput').click()">📸 Photo Badlo</button>
+<button class="btn" style="margin-top:10px;background:#333" onclick="editProfile()">✏️ Naam / Bio Badlo</button>
+</div>
+</div>
+
+<div class="bottom">
+<button class="active" onclick="showPage('home',this)">🏠</button>
+<button onclick="showPage('dost',this)">👥</button>
+<button onclick="showPage('chat',this)">💬</button>
+<button onclick="showPage('profile',this)">👤</button>
+</div>
 
 <script>
-function showTab(t,el){['home','friends','chat','profile'].forEach(x=>document.getElementById(x+'Tab').classList.toggle('hidden',x!==t));document.querySelectorAll('.menu button').forEach(b=>b.classList.remove('active'));el.classList.add('active');}
-let curMedia="",curType="img";
-document.getElementById('postFile').onchange=e=>{let f=e.target.files[0];let r=new FileReader();r.onload=()=>{curMedia=r.result;curType=f.type.startsWith('video')?'video':'img';let p=document.getElementById('prev'),v=document.getElementById('prevV');if(curType==='img'){p.src=r.result;p.classList.remove('hidden');v.classList.add('hidden');}else{v.src=r.result;v.classList.remove('hidden');p.classList.add('hidden');}};r.readAsDataURL(f);};
-document.getElementById('storyFile').onchange=e=>{let f=e.target.files[0];if(!f)return;let r=new FileReader();r.onload=()=>{let box=document.getElementById('storiesBox');let d=document.createElement('div');d.className='story';let isV=f.type.startsWith('video');d.innerHTML=`${isV?`<video src="${r.result}" autoplay muted loop></video>`:`<img src="${r.result}">`}<img class="sdp" src="https://i.pravatar.cc/100?img=12"><div class="grad"></div><span>तुम • अभी ${isV?'🎥 Video':'📸 Photo'}</span>`;box.prepend(d);alert('Story लग गई! '+(isV?'Video वाली 🎥':'Photo वाली 📸'));};r.readAsDataURL(f);};
-function addPost(){let t=document.getElementById('postText').value;if(!t&&!curMedia)return alert('कुछ लिखो या Photo/Video चुनो');let d=document.createElement('div');d.className='card';d.innerHTML=`<div class="row"><img class="dp" src="https://i.pravatar.cc/100?img=12"><div><b>${document.getElementById('myName').textContent}</b><br><small>अभी • DostiBook</small></div><button style="margin-left:auto;border:0;background:#FFE4EC;padding:6px 10px;border-radius:10px" onclick="this.parentElement.parentElement.remove()">🗑️</button></div><p>${t}</p>${curType==='img'&&curMedia?`<img class="postimg" src="${curMedia}">`:''}${curType==='video'&&curMedia?`<video src="${curMedia}" controls class="postvid"></video>`:''}<div class="actions"><button onclick="this.textContent='❤️ Liked (1)'">❤️ Like</button><button>💬 Comment</button><button onclick="alert('लिंक Copy!')">↗️ Share</button></div>`;document.getElementById('posts').prepend(d);document.getElementById('postText').value="";document.getElementById('prev').classList.add('hidden');document.getElementById('prevV').classList.add('hidden');curMedia="";}
-function saveName(){let v=document.getElementById('nameIn').value;if(v){document.getElementById('myName').textContent=v;alert('नाम बदल गया: '+v);}}
-function sendChat(){let v=document.getElementById('chatIn').value;if(!v)return;let f=document.getElementById('chatF').value;let b=document.getElementById('chatBox');b.innerHTML+=`<div style="background:#7B2FF7;color:#fff;padding:8px 10px;border-radius:12px;margin:5px 0;margin-left:20%">${v}</div>`;document.getElementById('chatIn').value="";setTimeout(()=>{b.innerHTML+=`<div style="background:#fff;padding:8px 10px;border-radius:12px;margin:5px 0;margin-right:20%"><b>${f}:</b> Haan bhai mast hai 😄</div>`;b.scrollTop=9999;},700);}
-</script></body></html>
+let myPic = localStorage.getItem('db_pic') || '';
+if(myPic){document.getElementById('myPic').src=myPic;document.getElementById('myPic2').src=myPic;}
+let myName = localStorage.getItem('db_name') || 'Sahil Kahn';
+let myBio = localStorage.getItem('db_bio') || 'DostiBook Star • Jodhpur';
+document.getElementById('myName').innerText=myName;document.getElementById('myName2').innerText=myName;document.getElementById('myBio').innerText=myBio;document.getElementById('myBio2').innerText=myBio;
+
+let stories = JSON.parse(localStorage.getItem('db_stories')||'[]');
+let posts = JSON.parse(localStorage.getItem('db_posts')||'[]');
+renderStories();renderPosts();
+
+function showPage(p,el){
+['home','dost','chat','profile'].forEach(x=>document.getElementById('page-'+x).classList.add('hidden'));
+document.getElementById('page-'+p).classList.remove('hidden');
+document.querySelectorAll('.bottom button').forEach(b=>b.classList.remove('active'));el.classList.add('active');
+window.scrollTo(0,0);
+}
+function changeProfile(e){
+let r=new FileReader();r.onload=function(){localStorage.setItem('db_pic',r.result);document.getElementById('myPic').src=r.result;document.getElementById('myPic2').src=r.result;alert('Profile Photo Update Ho Gayi! ✅')};r.readAsDataURL(e.target.files[0]);
+}
+function editProfile(){
+let n=prompt('Apna Naam Likho:',myName);if(n){myName=n;localStorage.setItem('db_name',n);}
+let b=prompt('Bio Likho:',myBio);if(b){myBio=b;localStorage.setItem('db_bio',b);}
+document.getElementById('myName').innerText=myName;document.getElementById('myName2').innerText=myName;document.getElementById('myBio').innerText=myBio;document.getElementById('myBio2').innerText=myBio;
+}
+function addStory(e){
+let f=e.target.files[0];let r=new FileReader();r.onload=function(){stories.unshift({src:r.result,type:f.type});localStorage.setItem('db_stories',JSON.stringify(stories));renderStories();alert('Story Lag Gayi! 🔥')};r.readAsDataURL(f);
+}
+function renderStories(){
+let box=document.getElementById('storyList');box.innerHTML=`<div class="story" onclick="document.getElementById('storyInput').click()"><img src="https://via.placeholder.com/150/FF8A00/fff?text=+"><p>+ Story</p></div>`;
+stories.forEach((s,i)=>{box.innerHTML+=`<div class="story" onclick="viewStory(${i})">${s.type.includes('video')?`<video src="${s.src}"></video>`:`<img src="${s.src}">`}<p>Meri Story</p></div>`});
+}
+function viewStory(i){if(confirm('Story Delete karni hai?')){stories.splice(i,1);localStorage.setItem('db_stories',JSON.stringify(stories));renderStories();}}
+let postImg='';
+function previewPost(e){let r=new FileReader();r.onload=function(){postImg=r.result;let p=document.getElementById('postPreview');p.src=r.result;p.classList.remove('hidden')};r.readAsDataURL(e.target.files[0]);}
+function addPost(){
+let t=document.getElementById('postText').value.trim();if(!t && !postImg){alert('Kuch likho ya photo chuno!');return;}
+posts.unshift({text:t,img:postImg,time:new Date().toLocaleString('hi-IN')});localStorage.setItem('db_posts',JSON.stringify(posts));document.getElementById('postText').value='';postImg='';document.getElementById('postPreview').classList.add('hidden');renderPosts();
+}
+function renderPosts(){
+let feed=document.getElementById('postFeed');feed.innerHTML='';
+posts.forEach((p,i)=>{feed.innerHTML+=`<div class="card"><b>${myName}</b> • <span style="font-size:11px;color:#999">${p.time}</span><p style="margin:8px 0">${p.text}</p>${p.img?`<img class="post-img" src="${p.img}">`:''}<div class="post-actions"><button onclick="alert('Dil se ❤️')">❤️ Dil Se</button><button onclick="if(confirm('Post delete karein?')){posts.splice(${i},1);localStorage.setItem('db_posts',JSON.stringify(posts));renderPosts();}">🗑️ Delete</button></div></div>`});
+}
+function shareApp(){let link='https://sahilkhn45427-cloud.github.io/dostibook/';if(navigator.share){navigator.share({title:'DostiBook',text:'Mera App DostiBook join karo!',url:link})}else{prompt('Link copy karo:',link)}}
+</script>
+</body>
+</html>
