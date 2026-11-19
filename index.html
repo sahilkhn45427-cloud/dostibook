@@ -3,91 +3,155 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>DostiBook</title>
+<title>DostiBook - Facebook Jaisa</title>
 <style>
-*{margin:0;padding:0;box-sizing:border-box;font-family:'Segoe UI',sans-serif}
-body{background:#f8f8f8;padding-bottom:90px}
-.top{background:#fff;padding:14px 16px;display:flex;justify-content:space-between;align-items:center;position:sticky;top:0;z-index:10;border-bottom:1px solid #eee}
-.top h1{font-size:26px;background:linear-gradient(135deg,#FF3D68,#FF8A00);-webkit-background-clip:text;-webkit-text-fill-color:transparent}
-.card{background:#fff;margin:12px;padding:14px;border-radius:16px}
-.card input,.card textarea{width:100%;padding:11px;border:1px solid #eee;border-radius:12px;margin:6px 0;outline:none;font-size:15px}
-.btn{background:linear-gradient(135deg,#FF3D68,#FF8A00);color:#fff;border:none;padding:11px;border-radius:12px;font-weight:700;width:100%;cursor:pointer}
-.btn2{background:#111;color:#fff;border:none;padding:8px 14px;border-radius:20px;font-weight:700;cursor:pointer}
-.profile{display:flex;gap:12px;align-items:center}
-.profile img{width:60px;height:60px;border-radius:50%;object-fit:cover;border:2px solid #FF3D68;background:#eee}
-.stories{display:flex;gap:12px;overflow-x:auto;padding:8px 2px}
-.story{flex:0 0 72px;text-align:center}
-.story img,.story video{width:64px;height:64px;border-radius:50%;object-fit:cover;border:3px solid #FF8A00;background:#eee}
-.post-img{width:100%;border-radius:14px;margin-top:10px;max-height:340px;object-fit:cover}
-.bottom{position:fixed;bottom:12px;left:12px;right:12px;background:#fff;display:flex;justify-content:space-around;padding:12px;border-radius:30px;box-shadow:0 8px 30px rgba(0,0,0,.15)}
-.bottom button{border:none;background:none;font-size:22px}
-.hidden{display:none}
-.filebox{position:relative;display:inline-block;background:#FFF0F3;color:#FF3D68;padding:9px 14px;border-radius:20px;font-weight:700;font-size:14px;border:1px solid #FFD9E2;cursor:pointer}
-.filebox input{position:absolute;left:0;top:0;opacity:0;width:100%;height:100%}
-.reel{margin:12px;background:#000;border-radius:16px;overflow:hidden;color:#fff}
-.reel video,.reel img{width:100%;max-height:480px;object-fit:cover;display:block}
-.friend{display:flex;gap:10px;align-items:center;padding:10px 0;border-bottom:1px solid #f2f2f2}
-.friend img{width:46px;height:46px;border-radius:50%;object-fit:cover;background:#eee}
-.chat-box{height:320px;overflow-y:auto;background:#f9f9f9;border-radius:12px;padding:10px;margin:10px 0}
-.msg{max-width:80%;padding:8px 12px;border-radius:16px;margin:6px 0;font-size:14px}
-.my-msg{background:#FF3D68;color:#fff;margin-left:auto;text-align:right}
-.other-msg{background:#fff;border:1px solid #eee}
-.chat-input{display:flex;gap:8px}
-.chat-input input{flex:1}
-.like-bar{display:flex;gap:10px;margin-top:10px;border-top:1px solid #f2f2f2;padding-top:10px}
-.like-btn{flex:1;background:#FFF0F3;border:none;padding:9px;border-radius:20px;font-weight:700;color:#FF3D68;cursor:pointer}
-.like-btn.liked{background:#FF3D68;color:#fff}
-.comment-box{background:#f9f9f9;padding:10px;border-radius:12px;margin-top:10px}
-.cmt{font-size:13px;padding:6px 0;border-bottom:1px solid #eee}
+*{margin:0;padding:0;box-sizing:border-box;font-family:Arial}
+body{background:#f0f2f5}
+.header{background:#1877f2;color:#fff;padding:12px;text-align:center;font-size:22px;font-weight:bold;position:sticky;top:0;z-index:10}
+.container{max-width:500px;margin:auto;padding:10px}
+.card{background:#fff;border-radius:10px;padding:12px;margin-bottom:12px;box-shadow:0 1px 3px rgba(0,0,0,.15)}
+input,textarea{width:100%;padding:10px;border:1px solid #ddd;border-radius:8px;margin-bottom:8px;outline:none}
+button{background:#1877f2;color:#fff;border:none;padding:10px 14px;border-radius:8px;font-weight:bold;cursor:pointer;width:100%;margin-top:5px}
+button.gray{background:#e4e6eb;color:#000}
+.story-row{display:flex;gap:8px;overflow-x:auto;padding-bottom:5px}
+.story{ min-width:90px;height:140px;border-radius:10px;overflow:hidden;position:relative;background:#ddd;cursor:pointer}
+.story img{width:100%;height:100%;object-fit:cover}
+.story span{position:absolute;bottom:5px;left:5px;color:#fff;font-size:12px;font-weight:bold;text-shadow:1px 1px 2px #000}
+.post-img{width:100%;border-radius:8px;margin-top:8px;max-height:400px;object-fit:cover}
+.post-head{font-weight:bold;margin-bottom:5px}
+.time{font-size:11px;color:gray;font-weight:normal}
+.actions{display:flex;gap:8px;margin-top:10px}
+.actions button{flex:1}
+.comment-box{display:flex;gap:5px;margin-top:10px}
+.comment-box input{margin:0}
+.comment-box button{width:80px;margin:0}
+.one-comment{background:#f0f2f5;padding:6px 10px;border-radius:10px;margin-top:6px;font-size:14px}
+.name-row{display:flex;gap:8px}
+.name-row input{flex:1}
 </style>
 </head>
 <body>
-<div id="loginPage"><div style="padding:30px 20px;text-align:center"><h1 style="font-size:36px;color:#FF3D68">DostiBook</h1><p style="color:#888">Apni Duniya • Apne Log</p><div class="card" style="text-align:left"><h3 id="loginTitle">Login Karo</h3><div id="signupFields" class="hidden"><input id="regName" placeholder="Apna Naam"></div><input id="loginPhone" placeholder="Mobile Number"><input id="loginPass" type="password" placeholder="Password"><button class="btn" onclick="doLogin()" id="loginBtn">Login</button><p style="text-align:center;margin-top:12px"><span id="toggleText">Naya ho? </span><b style="color:#FF3D68" onclick="toggleLogin()" id="toggleBtn">Account Banao</b></p></div></div></div>
-<div id="mainApp" class="hidden">
-<div class="top"><h1>DostiBook</h1><b id="helloName"></b></div>
-<div id="page-home">
-<div class="card"><div class="profile"><label class="filebox" style="border-radius:50%;padding:0;border:none;background:none"><img id="myPic" src="https://via.placeholder.com/150/FF3D68/fff?text=You"><input type="file" accept="image/*" onchange="changeProfile(event)"></label><div style="flex:1"><b id="myName">Sahil Kahn</b><br><span id="myBio" style="font-size:12px;color:#888">DostiBook • Jodhpur</span></div><button class="btn2" onclick="editProfile()">Edit</button></div></div>
-<div class="card"><b>Stories</b><div class="stories" id="storyList"></div><label class="filebox">+ Story Me Photo / Video Daalo<input type="file" accept="image/*,video/*" onchange="addStory(event)"></label></div>
-<div class="card"><textarea id="postText" rows="3" placeholder="Aaj kya masti hui?"></textarea><img id="postPreview" class="post-img hidden"><div style="display:flex;justify-content:space-between;margin-top:8px"><label class="filebox">Photo Chuno<input type="file" accept="image/*" onchange="previewPost(event)"></label><button class="btn2" onclick="addPost()">Post Karo</button></div><p id="postStatus" style="font-size:12px;color:green"></p></div>
-<div id="postFeed"></div>
+<div class="header">DostiBook ❤️</div>
+<div class="container">
+
+<div class="card">
+<div class="name-row">
+<input id="myName" placeholder="Tera Naam likh - jaise Sahil" value="Sahil Kahn">
 </div>
-<div id="page-reels" class="hidden"><div class="card"><h3>Reels</h3><label class="filebox">+ Reel Video Daalo<input type="file" accept="video/*" onchange="addReel(event)"></label></div><div id="reelFeed"></div></div>
-<div id="page-dost" class="hidden"><div class="card"><h3>Mere Dost (<span id="friendCount">0</span>)</h3><input id="newFriendName" placeholder="Dost ka naam"><input id="newFriendCity" placeholder="City"><button class="btn" onclick="addFriend()">+ Dost Jodo</button><div id="friendList"></div><button class="btn" style="margin-top:12px;background:#25D366" onclick="shareApp()">WhatsApp Share</button></div></div>
-<div id="page-chat" class="hidden"><div class="card"><button class="btn2" onclick="showPage('dost')">← Back</button><h3 id="chatWith" style="margin-top:10px">Chat</h3><div class="chat-box" id="chatBox"></div><div class="chat-input"><input id="chatInput" placeholder="Message likho..."><button class="btn2" onclick="sendMsg()">Send ➤</button></div></div></div>
-<div id="page-profile" class="hidden"><div class="card" style="text-align:center"><img id="myPic2" src="https://via.placeholder.com/150/FF3D68/fff?text=You" style="width:100px;height:100px;border-radius:50%;object-fit:cover;border:3px solid #FF3D68"><h2 id="myName2">Sahil Kahn</h2><p id="myBio2" style="color:#888">DostiBook • Jodhpur</p><p id="myPhoneShow"></p><button class="btn" style="margin-top:10px;background:#111" onclick="editProfile()">Naam / Bio Badlo</button><button class="btn" style="margin-top:10px;background:red" onclick="doLogout()">Logout</button></div></div>
-<div class="bottom"><button onclick="showPage('home')">🏠</button><button onclick="showPage('reels')">🎬</button><button onclick="showPage('dost')">👥</button><button onclick="showPage('chat')">💬</button><button onclick="showPage('profile')">👤</button></div>
+<h3>Story Lagao 📸</h3>
+<input type="file" id="storyFile" accept="image/*">
+<button onclick="addStory()">Story Lagao</button>
+<div class="story-row" id="storyRow"></div>
 </div>
+
+<div class="card">
+<h3>Kya Soch Rahe Ho? 🤔</h3>
+<textarea id="postText" rows="2" placeholder="Aaj kya masti hui?"></textarea>
+<input type="file" id="postFile" accept="image/*">
+<button onclick="addPost()">Post Karo 🚀</button>
+</div>
+
+<div id="postList"></div>
+
+</div>
+
+<script src="https://www.gstatic.com/firebasejs/9.22.0/firebase-app-compat.js"></script>
+<script src="https://www.gstatic.com/firebasejs/9.22.0/firebase-firestore-compat.js"></script>
+<script src="https://www.gstatic.com/firebasejs/9.22.0/firebase-storage-compat.js"></script>
 <script>
-let isSignup=false; let currentChatFriend='';
-function toggleLogin(){isSignup=!isSignup;document.getElementById('signupFields').classList.toggle('hidden',!isSignup);document.getElementById('loginTitle').innerText=isSignup?'Naya Account Banao':'Login Karo';document.getElementById('loginBtn').innerText=isSignup?'Account Banao':'Login';document.getElementById('toggleText').innerText=isSignup?'Pehle se account hai? ':'Naya ho? ';document.getElementById('toggleBtn').innerText=isSignup?'Login Karo':'Account Banao';}
-function doLogin(){let phone=document.getElementById('loginPhone').value.trim();let pass=document.getElementById('loginPass').value.trim();if(!phone||!pass){alert('Mobile aur Password daalo');return;}let users=JSON.parse(localStorage.getItem('db_users')||'{}');if(isSignup){let name=document.getElementById('regName').value.trim();if(!name){alert('Naam daalo');return;}if(users[phone]){alert('Pehle se account hai');return;}users[phone]={name:name,phone:phone,pass:pass};localStorage.setItem('db_users',JSON.stringify(users));localStorage.setItem('db_current',phone);alert('Account Ban Gaya!');startApp();}else{if(!users[phone]){alert('Account nahi mila, pehle Account Banao dabao');return;}if(users[phone].pass!==pass){alert('Password galat');return;}localStorage.setItem('db_current',phone);startApp();}}
-function doLogout(){localStorage.removeItem('db_current');location.reload();}
-function startApp(){let phone=localStorage.getItem('db_current');if(!phone)return;let users=JSON.parse(localStorage.getItem('db_users')||'{}');let me=users[phone];if(!me)return;document.getElementById('loginPage').classList.add('hidden');document.getElementById('mainApp').classList.remove('hidden');document.getElementById('helloName').innerText=me.name;window.myPhone=phone;window.myName=localStorage.getItem('db_name_'+phone)||me.name;window.myBio=localStorage.getItem('db_bio_'+phone)||'DostiBook • Jodhpur';document.getElementById('myName').innerText=window.myName;document.getElementById('myName2').innerText=window.myName;document.getElementById('myBio').innerText=window.myBio;document.getElementById('myBio2').innerText=window.myBio;document.getElementById('myPhoneShow').innerText='📱 '+phone;let pic=localStorage.getItem('db_pic_'+phone);if(pic){document.getElementById('myPic').src=pic;document.getElementById('myPic2').src=pic;}loadData();}
-function loadData(){window.stories=JSON.parse(localStorage.getItem('db_stories_'+window.myPhone)||'[]');window.posts=JSON.parse(localStorage.getItem('db_posts_'+window.myPhone)||'[]');window.friends=JSON.parse(localStorage.getItem('db_friends_'+window.myPhone)||'[]');window.reels=JSON.parse(localStorage.getItem('db_reels_'+window.myPhone)||'[]');window.chats=JSON.parse(localStorage.getItem('db_chats_'+window.myPhone)||'{}');window.postMeta=JSON.parse(localStorage.getItem('db_postMeta_'+window.myPhone)||'{}');renderStories();renderPosts();renderFriends();renderReels();}
-function showPage(p){['home','reels','dost','profile','chat'].forEach(x=>document.getElementById('page-'+x).classList.add('hidden'));document.getElementById('page-'+p).classList.remove('hidden');window.scrollTo(0,0);}
-function compressImage(file,cb){let r=new FileReader();r.onload=function(e){let img=new Image();img.onload=function(){let c=document.createElement('canvas');let w=img.width,h=img.height;if(w>600){h=h*600/w;w=600;}c.width=w;c.height=h;c.getContext('2d').drawImage(img,0,0,w,h);cb(c.toDataURL('image/jpeg',0.55));};img.src=e.target.result;};r.readAsDataURL(file);}
-function changeProfile(e){let f=e.target.files[0];if(!f)return;compressImage(f,function(url){document.getElementById('myPic').src=url;document.getElementById('myPic2').src=url;try{localStorage.setItem('db_pic_'+window.myPhone,url);}catch(err){alert('Photo bahut badi hai, choti photo chuno');}alert('Profile Photo Lag Gayi!');});e.target.value='';}
-function editProfile(){let n=prompt('Naam:',window.myName);if(n){window.myName=n;localStorage.setItem('db_name_'+window.myPhone,n);}let b=prompt('Bio:',window.myBio);if(b){window.myBio=b;localStorage.setItem('db_bio_'+window.myPhone,b);}document.getElementById('myName').innerText=window.myName;document.getElementById('myName2').innerText=window.myName;document.getElementById('myBio').innerText=window.myBio;document.getElementById('myBio2').innerText=window.myBio;}
-function addStory(e){let f=e.target.files[0];if(!f)return;if(f.type.includes('video')){let url=URL.createObjectURL(f);window.stories.unshift({src:url,type:'video'});renderStories();alert('Video Story Lag Gayi!');}else{compressImage(f,function(url){window.stories.unshift({src:url,type:'image'});try{localStorage.setItem('db_stories_'+window.myPhone,JSON.stringify(window.stories));}catch(err){alert('Story photo badi hai');}renderStories();alert('Story Lag Gayi!');});}e.target.value='';}
-function renderStories(){let box=document.getElementById('storyList');if(window.stories.length==0){box.innerHTML='<p style="font-size:13px;color:#999">Abhi koi story nahi</p>';return;}box.innerHTML='';window.stories.forEach((s,i)=>{box.innerHTML+=`<div class="story" onclick="if(confirm('Delete karein?')){window.stories.splice(${i},1);localStorage.setItem('db_stories_'+window.myPhone,JSON.stringify(window.stories));renderStories();}">${s.type.includes('video')?`<video src="${s.src}" muted></video>`:`<img src="${s.src}">`}<p>Meri Story</p></div>`});}
-let postImg='';
-function previewPost(e){let f=e.target.files[0];if(!f)return;compressImage(f,function(url){postImg=url;let p=document.getElementById('postPreview');p.src=url;p.classList.remove('hidden');document.getElementById('postStatus').innerText='Photo lag gayi, ab Post Karo dabao';});e.target.value='';}
-function addPost(){let t=document.getElementById('postText').value.trim();if(!t&&!postImg){alert('Kuch likho ya photo chuno');return;}let newId='p'+Date.now();window.posts.unshift({id:newId,text:t,img:postImg,time:new Date().toLocaleString('hi-IN')});try{localStorage.setItem('db_posts_'+window.myPhone,JSON.stringify(window.posts));}catch(e){alert('Photo bahut badi hai, choti photo chuno');return;}document.getElementById('postText').value='';postImg='';document.getElementById('postPreview').classList.add('hidden');document.getElementById('postStatus').innerText='';renderPosts();alert('Post Ho Gayi!');}
-function getMeta(post){let id=post.id||post.time;if(!window.postMeta[id])window.postMeta[id]={likes:0,liked:false,comments:[]};return window.postMeta[id];}
-function saveMeta(){try{localStorage.setItem('db_postMeta_'+window.myPhone,JSON.stringify(window.postMeta));}catch(e){}}
-function renderPosts(){let feed=document.getElementById('postFeed');if(!window.posts.length){feed.innerHTML='<div class="card" style="text-align:center;color:#999">Abhi koi post nahi</div>';return;}feed.innerHTML='';window.posts.forEach((p,i)=>{let meta=getMeta(p);let cmts=(meta.comments||[]).map(c=>`<div class="cmt"><b>${c.name}:</b> ${c.text}</div>`).join('');feed.innerHTML+=`<div class="card"><b>${window.myName}</b> • <span style="font-size:11px;color:#999">${p.time}</span><p style="margin:8px 0">${p.text||''}</p>${p.img?`<img class="post-img" src="${p.img}">`:''}<div class="like-bar"><button class="like-btn ${meta.liked?'liked':''}" onclick="toggleLike(${i})">❤️ Like (${meta.likes})</button><button class="like-btn" style="background:#f2f2f2;color:#111" onclick="document.getElementById('cmt-${i}').classList.toggle('hidden')">💬 Comment (${meta.comments.length})</button></div><div id="cmt-${i}" class="comment-box hidden"><div>${cmts||'<p style="font-size:12px;color:#999">Abhi koi comment nahi</p>'}</div><input id="cmtInput-${i}" placeholder="Comment likho..."><button class="btn" onclick="addComment(${i})">Comment Karo</button></div><button class="btn2" style="margin-top:8px;background:#eee;color:#111" onclick="deletePost(${i})">Delete Post</button></div>`});}
-function toggleLike(i){let p=window.posts[i];let meta=getMeta(p);if(meta.liked){meta.likes--;meta.liked=false;}else{meta.likes++;meta.liked=true;}saveMeta();renderPosts();}
-function addComment(i){let inp=document.getElementById('cmtInput-'+i);if(!inp)return;let t=inp.value.trim();if(!t){alert('Comment likho');return;}let p=window.posts[i];let meta=getMeta(p);meta.comments.push({name:window.myName,text:t});saveMeta();renderPosts();alert('Comment Ho Gaya!');}
-function deletePost(i){if(!confirm('Delete karein?'))return;let p=window.posts[i];let id=p.id||p.time;delete window.postMeta[id];saveMeta();window.posts.splice(i,1);localStorage.setItem('db_posts_'+window.myPhone,JSON.stringify(window.posts));renderPosts();}
-function addReel(e){let f=e.target.files[0];if(!f)return;let url=URL.createObjectURL(f);window.reels.unshift({src:url,text:prompt('Reel ka naam / caption likho')||'Meri Reel'});renderReels();alert('Reel Lag Gayi!');e.target.value='';}
-function renderReels(){let feed=document.getElementById('reelFeed');if(!window.reels.length){feed.innerHTML='<div class="card" style="text-align:center;color:#999">Abhi koi reel nahi, upar se daalo</div>';return;}feed.innerHTML='';window.reels.forEach((r,i)=>{feed.innerHTML+=`<div class="reel"><video src="${r.src}" controls playsinline></video><div style="padding:10px"><b>${window.myName}</b> - ${r.text}</div></div>`});}
-function addFriend(){let n=document.getElementById('newFriendName').value.trim();let c=document.getElementById('newFriendCity').value.trim()||'Jodhpur';if(!n){alert('Naam likho');return;}window.friends.unshift({name:n,city:c});localStorage.setItem('db_friends_'+window.myPhone,JSON.stringify(window.friends));document.getElementById('newFriendName').value='';document.getElementById('newFriendCity').value='';renderFriends();alert(n+' Jud Gaya!');}
-function renderFriends(){let box=document.getElementById('friendList');document.getElementById('friendCount').innerText=window.friends.length;if(!window.friends.length){box.innerHTML='<p style="color:#888">Abhi koi dost nahi</p>';return;}box.innerHTML='';window.friends.forEach((f,i)=>{box.innerHTML+=`<div class="friend"><img src="https://via.placeholder.com/150/FF3D68/fff?text=${f.name.charAt(0)}"><div style="flex:1"><b>${f.name}</b><br><span style="font-size:12px;color:#888">${f.city}</span></div><button class="btn2" onclick="openChat('${f.name}')">Chat 💬</button></div>`});}
-function openChat(name){currentChatFriend=name;document.getElementById('chatWith').innerText='Chat - '+name;showPage('chat');renderChat();}
-function renderChat(){let box=document.getElementById('chatBox');let msgs=window.chats[currentChatFriend]||[];if(!msgs.length){box.innerHTML='<p style="text-align:center;color:#999">Abhi koi message nahi, pehla message bhejo!</p>';return;}box.innerHTML='';msgs.forEach(m=>{box.innerHTML+=`<div class="msg ${m.from==='me'?'my-msg':'other-msg'}">${m.text}<br><span style="font-size:10px;opacity:0.7">${m.time}</span></div>`});box.scrollTop=box.scrollHeight;}
-function sendMsg(){let inp=document.getElementById('chatInput');let t=inp.value.trim();if(!t||!currentChatFriend){alert('Pehle Dost chuno');return;}if(!window.chats[currentChatFriend])window.chats[currentChatFriend]=[];window.chats[currentChatFriend].push({text:t,from:'me',time:new Date().toLocaleTimeString('hi-IN',{hour:'2-digit',minute:'2-digit'})});localStorage.setItem('db_chats_'+window.myPhone,JSON.stringify(window.chats));inp.value='';renderChat();}
-function shareApp(){let link='https://sahilkhn45427-cloud.github.io/dostibook/';if(navigator.share){navigator.share({title:'DostiBook',url:link})}else{prompt('Link copy karo:',link)}}
-startApp();
+const firebaseConfig = {
+  apiKey: "AIzaSyCchg5W7COWvlWbLyWuYzvPhu9j6Sy8qTo",
+  authDomain: "dostibook-7c5de.firebaseapp.com",
+  projectId: "dostibook-7c5de",
+  storageBucket: "dostibook-7c5de.firebasestorage.app",
+  messagingSenderId: "581938722841",
+  appId: "1:581938722841:web:033a55b0923f87b0fd9288",
+  measurementId: "G-FXNSNH88MD"
+};
+firebase.initializeApp(firebaseConfig);
+const db = firebase.firestore();
+const storage = firebase.storage();
+
+// Naam save rakho
+let savedName = localStorage.getItem('dostiName');
+if(savedName) document.getElementById('myName').value = savedName;
+document.getElementById('myName').onchange = e => localStorage.setItem('dostiName', e.target.value);
+
+function getName(){ return document.getElementById('myName').value || 'Dost'; }
+
+async function uploadImage(file, folder){
+  const ref = storage.ref(folder + '/' + Date.now() + '_' + file.name);
+  await ref.put(file);
+  return await ref.getDownloadURL();
+}
+
+// POST
+async function addPost(){
+  let text = document.getElementById('postText').value.trim();
+  let file = document.getElementById('postFile').files[0];
+  if(!text && !file) return alert('Kuch to likh ya photo chun!');
+  let imgUrl = '';
+  if(file) imgUrl = await uploadImage(file, 'posts');
+  await db.collection('posts').add({name:getName(), text:text, img:imgUrl, likes:0, time:Date.now(), date:new Date().toLocaleString('hi-IN')});
+  document.getElementById('postText').value='';
+  document.getElementById('postFile').value='';
+  alert('Post ho gaya!');
+}
+
+// STORY
+async function addStory(){
+  let file = document.getElementById('storyFile').files[0];
+  if(!file) return alert('Pehle photo chun!');
+  let imgUrl = await uploadImage(file, 'stories');
+  await db.collection('stories').add({name:getName(), img:imgUrl, time:Date.now()});
+  document.getElementById('storyFile').value='';
+  alert('Story lag gayi!');
+}
+
+// POSTS DIKHAO - SABKO DIKHEGA
+db.collection('posts').orderBy('time','desc').onSnapshot(snap=>{
+  let html='';
+  snap.forEach(doc=>{
+    let p=doc.data(); let id=doc.id;
+    html += `<div class="card"><div class="post-head">${p.name} <span class="time">• ${p.date||''}</span></div>
+    <div>${p.text||''}</div>
+    ${p.img?`<img class="post-img" src="${p.img}">`:''}
+    <div class="actions">
+      <button onclick="likePost('${id}',${p.likes||0})">❤️ Like (${p.likes||0})</button>
+      <button class="gray" onclick="deletePost('${id}')">🗑️ Delete</button>
+    </div>
+    <div id="comments-${id}"></div>
+    <div class="comment-box"><input id="c-${id}" placeholder="Comment likho..."><button onclick="addComment('${id}')">Send</button></div>
+    </div>`;
+    loadComments(id);
+  });
+  document.getElementById('postList').innerHTML = html || '<p style="text-align:center;color:gray">Abhi koi post nahi hai, pehla post karo!</p>';
+});
+
+function likePost(id, likes){ db.collection('posts').doc(id).update({likes:likes+1}); }
+function deletePost(id){ if(confirm('Delete kare?')) db.collection('posts').doc(id).delete(); }
+
+async function addComment(postId){
+  let inp = document.getElementById('c-'+postId);
+  if(!inp.value.trim()) return;
+  await db.collection('posts').doc(postId).collection('comments').add({name:getName(), text:inp.value, time:Date.now()});
+  inp.value='';
+}
+function loadComments(postId){
+  db.collection('posts').doc(postId).collection('comments').orderBy('time','asc').onSnapshot(s=>{
+    let h='';
+    s.forEach(d=>{ let c=d.data(); h+=`<div class="one-comment"><b>${c.name}:</b> ${c.text}</div>`; });
+    let el=document.getElementById('comments-'+postId);
+    if(el) el.innerHTML=h;
+  });
+}
+
+// STORIES DIKHAO
+db.collection('stories').orderBy('time','desc').onSnapshot(snap=>{
+  let h='';
+  snap.forEach(doc=>{ let s=doc.data(); h+=`<div class="story" onclick="window.open('${s.img}','_blank')"><img src="${s.img}"><span>${s.name}</span></div>`; });
+  document.getElementById('storyRow').innerHTML = h || '<p style="color:gray;font-size:13px">Koi story nahi hai</p>';
+});
 </script>
 </body>
 </html>
