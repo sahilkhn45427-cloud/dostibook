@@ -3,61 +3,104 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>DostiBook - Facebook Jaisa</title>
+<title>DostiBook - Full Complete</title>
 <style>
 *{margin:0;padding:0;box-sizing:border-box;font-family:Arial}
-body{background:#f0f2f5}
+body{background:#f0f2f5;padding-bottom:70px}
 .header{background:#1877f2;color:#fff;padding:12px;text-align:center;font-size:22px;font-weight:bold;position:sticky;top:0;z-index:10}
+.header span{font-size:13px;background:#ff0000;padding:2px 7px;border-radius:10px}
 .container{max-width:500px;margin:auto;padding:10px}
-.card{background:#fff;border-radius:10px;padding:12px;margin-bottom:12px;box-shadow:0 1px 3px rgba(0,0,0,.15)}
+.card{background:#fff;border-radius:12px;padding:12px;margin-bottom:12px;box-shadow:0 1px 3px rgba(0,0,0,.15)}
 input,textarea{width:100%;padding:10px;border:1px solid #ddd;border-radius:8px;margin-bottom:8px;outline:none}
-button{background:#1877f2;color:#fff;border:none;padding:10px 14px;border-radius:8px;font-weight:bold;cursor:pointer;width:100%;margin-top:5px}
+button{background:#1877f2;color:#fff;border:none;padding:10px;border-radius:8px;font-weight:bold;cursor:pointer;width:100%}
 button.gray{background:#e4e6eb;color:#000}
-.story-row{display:flex;gap:8px;overflow-x:auto;padding-bottom:5px}
-.story{ min-width:90px;height:140px;border-radius:10px;overflow:hidden;position:relative;background:#ddd;cursor:pointer}
-.story img{width:100%;height:100%;object-fit:cover}
-.story span{position:absolute;bottom:5px;left:5px;color:#fff;font-size:12px;font-weight:bold;text-shadow:1px 1px 2px #000}
-.post-img{width:100%;border-radius:8px;margin-top:8px;max-height:400px;object-fit:cover}
-.post-head{font-weight:bold;margin-bottom:5px}
-.time{font-size:11px;color:gray;font-weight:normal}
-.actions{display:flex;gap:8px;margin-top:10px}
-.actions button{flex:1}
-.comment-box{display:flex;gap:5px;margin-top:10px}
-.comment-box input{margin:0}
-.comment-box button{width:80px;margin:0}
+button.green{background:#42b72a}
+button.red{background:#ff3b30}
+.story-row{display:flex;gap:8px;overflow-x:auto}
+.story{min-width:95px;height:150px;border-radius:12px;overflow:hidden;position:relative;background:#ddd;flex-shrink:0}
+.story img,.story video{width:100%;height:100%;object-fit:cover}
+.story span{position:absolute;bottom:5px;left:5px;color:#fff;font-size:12px;font-weight:bold;text-shadow:1px 1px 3px #000}
+.post-img,.post-video{width:100%;border-radius:8px;margin-top:8px;max-height:400px}
+.actions{display:flex;gap:6px;margin-top:10px;flex-wrap:wrap}
+.actions button{flex:1;font-size:13px;padding:8px}
+.cbox{display:flex;gap:5px;margin-top:10px}
+.cbox input{margin:0}
+.cbox button{width:70px}
 .one-comment{background:#f0f2f5;padding:6px 10px;border-radius:10px;margin-top:6px;font-size:14px}
-.name-row{display:flex;gap:8px}
-.name-row input{flex:1}
+.tabs{position:fixed;bottom:0;left:0;right:0;background:#fff;display:flex;border-top:1px solid #ddd;z-index:20}
+.tabs button{background:none;color:#000;padding:14px 0;font-size:14px;border-radius:0}
+.tabs button.active{color:#1877f2;border-top:3px solid #1877f2}
+.badge{background:red;color:#fff;border-radius:50%;padding:1px 6px;font-size:11px}
+.chat-msg{background:#f0f2f5;padding:8px 12px;border-radius:12px;margin-bottom:8px}
+.chat-msg.me{background:#d3eafd;text-align:right}
+.noti{background:#fff3cd;padding:10px;border-radius:10px;margin-bottom:8px;font-size:14px}
+#status{text-align:center;color:green;font-size:13px}
 </style>
 </head>
 <body>
-<div class="header">DostiBook ❤️</div>
+<div class="header">DostiBook ❤️ <span id="notiCount" style="display:none">0</span></div>
 <div class="container">
+<div id="status"></div>
+
+<!-- HOME TAB -->
+<div id="tab-home">
+<div class="card">
+<input id="myName" placeholder="Tera Naam" value="Sahil Kahn">
+<p style="font-size:12px;color:gray">Naam badlo to Follow / Chat me wahi dikhega</p>
+</div>
 
 <div class="card">
-<div class="name-row">
-<input id="myName" placeholder="Tera Naam likh - jaise Sahil" value="Sahil Kahn">
-</div>
-<h3>Story Lagao 📸</h3>
-<input type="file" id="storyFile" accept="image/*">
+<h3>Story - Photo / Video 📸🎥</h3>
+<input type="file" id="storyFile" accept="image/*,video/*">
 <button onclick="addStory()">Story Lagao</button>
-<div class="story-row" id="storyRow"></div>
+<div class="story-row" id="storyRow" style="margin-top:10px"></div>
 </div>
 
 <div class="card">
-<h3>Kya Soch Rahe Ho? 🤔</h3>
-<textarea id="postText" rows="2" placeholder="Aaj kya masti hui?"></textarea>
-<input type="file" id="postFile" accept="image/*">
+<h3>Post - Photo / Video ✍️</h3>
+<textarea id="postText" rows="2" placeholder="Kya soch rahe ho?"></textarea>
+<input type="file" id="postFile" accept="image/*,video/*">
 <button onclick="addPost()">Post Karo 🚀</button>
 </div>
 
 <div id="postList"></div>
+</div>
 
+<!-- CHAT TAB -->
+<div id="tab-chat" style="display:none">
+<div class="card"><h3>💬 Dosto Se Chat</h3><p style="font-size:13px;color:gray">Sab dost yaha chat kar sakte hai</p></div>
+<div class="card" id="chatList" style="max-height:350px;overflow-y:auto"></div>
+<div class="card"><div class="cbox"><input id="chatInput" placeholder="Message likho..."><button onclick="sendChat()">Send</button></div></div>
+</div>
+
+<!-- NOTIFICATION TAB -->
+<div id="tab-noti" style="display:none">
+<div class="card"><h3>🔔 Notifications</h3><button class="gray" onclick="clearNoti()">Clear All</button></div>
+<div id="notiList"></div>
+</div>
+
+<!-- PROFILE TAB -->
+<div id="tab-profile" style="display:none">
+<div class="card" style="text-align:center">
+<h2 id="profileName">Sahil Kahn</h2>
+<p id="profileStats">Followers: 0 | Following: 0</p>
+<p style="font-size:13px;color:gray">Tera Mobile App - Sab Update Yaha</p>
+<button class="green" onclick="alert('App Updated! Naya Version Chal Raha Hai')">📱 App Update Check Karo</button>
+</div>
+<div class="card"><h3>Follow Kiye Hue Dost</h3><div id="followingList"></div></div>
+</div>
+
+</div>
+
+<div class="tabs">
+<button id="btn-home" class="active" onclick="showTab('home')">🏠 Home</button>
+<button onclick="showTab('chat')">💬 Chat</button>
+<button onclick="showTab('noti')">🔔 Noti <span id="notiBadge"></span></button>
+<button onclick="showTab('profile')">👤 Profile</button>
 </div>
 
 <script src="https://www.gstatic.com/firebasejs/9.22.0/firebase-app-compat.js"></script>
 <script src="https://www.gstatic.com/firebasejs/9.22.0/firebase-firestore-compat.js"></script>
-<script src="https://www.gstatic.com/firebasejs/9.22.0/firebase-storage-compat.js"></script>
 <script>
 const firebaseConfig = {
   apiKey: "AIzaSyCchg5W7COWvlWbLyWuYzvPhu9j6Sy8qTo",
@@ -65,93 +108,143 @@ const firebaseConfig = {
   projectId: "dostibook-7c5de",
   storageBucket: "dostibook-7c5de.firebasestorage.app",
   messagingSenderId: "581938722841",
-  appId: "1:581938722841:web:033a55b0923f87b0fd9288",
-  measurementId: "G-FXNSNH88MD"
+  appId: "1:581938722841:web:033a55b0923f87b0fd9288"
 };
 firebase.initializeApp(firebaseConfig);
 const db = firebase.firestore();
-const storage = firebase.storage();
-
-// Naam save rakho
-let savedName = localStorage.getItem('dostiName');
-if(savedName) document.getElementById('myName').value = savedName;
-document.getElementById('myName').onchange = e => localStorage.setItem('dostiName', e.target.value);
-
-function getName(){ return document.getElementById('myName').value || 'Dost'; }
-
-async function uploadImage(file, folder){
-  const ref = storage.ref(folder + '/' + Date.now() + '_' + file.name);
-  await ref.put(file);
-  return await ref.getDownloadURL();
+function getName(){ return document.getElementById('myName').value.trim() || 'Dost'; }
+function msg(m){ document.getElementById('status').innerText=m; setTimeout(()=>document.getElementById('status').innerText='',3000); }
+function showTab(t){
+  ['home','chat','noti','profile'].forEach(x=>document.getElementById('tab-'+x).style.display = x==t?'block':'none');
+  document.getElementById('btn-home').classList.toggle('active', t=='home');
+  if(t=='profile') loadProfile();
 }
+document.getElementById('myName').oninput = e=>{ document.getElementById('profileName').innerText = e.target.value; localStorage.setItem('dostiName', e.target.value); };
+let sn = localStorage.getItem('dostiName'); if(sn){ document.getElementById('myName').value=sn; document.getElementById('profileName').innerText=sn; }
 
-// POST
-async function addPost(){
-  let text = document.getElementById('postText').value.trim();
-  let file = document.getElementById('postFile').files[0];
-  if(!text && !file) return alert('Kuch to likh ya photo chun!');
-  let imgUrl = '';
-  if(file) imgUrl = await uploadImage(file, 'posts');
-  await db.collection('posts').add({name:getName(), text:text, img:imgUrl, likes:0, time:Date.now(), date:new Date().toLocaleString('hi-IN')});
-  document.getElementById('postText').value='';
-  document.getElementById('postFile').value='';
-  alert('Post ho gaya!');
-}
-
-// STORY
-async function addStory(){
-  let file = document.getElementById('storyFile').files[0];
-  if(!file) return alert('Pehle photo chun!');
-  let imgUrl = await uploadImage(file, 'stories');
-  await db.collection('stories').add({name:getName(), img:imgUrl, time:Date.now()});
-  document.getElementById('storyFile').value='';
-  alert('Story lag gayi!');
-}
-
-// POSTS DIKHAO - SABKO DIKHEGA
-db.collection('posts').orderBy('time','desc').onSnapshot(snap=>{
-  let html='';
-  snap.forEach(doc=>{
-    let p=doc.data(); let id=doc.id;
-    html += `<div class="card"><div class="post-head">${p.name} <span class="time">• ${p.date||''}</span></div>
-    <div>${p.text||''}</div>
-    ${p.img?`<img class="post-img" src="${p.img}">`:''}
-    <div class="actions">
-      <button onclick="likePost('${id}',${p.likes||0})">❤️ Like (${p.likes||0})</button>
-      <button class="gray" onclick="deletePost('${id}')">🗑️ Delete</button>
-    </div>
-    <div id="comments-${id}"></div>
-    <div class="comment-box"><input id="c-${id}" placeholder="Comment likho..."><button onclick="addComment('${id}')">Send</button></div>
-    </div>`;
-    loadComments(id);
+// File -> Base64 (Photo + Video) - Storage ki jarurat nahi
+function fileToBase64(file){
+  return new Promise((res,rej)=>{
+    if(file.size > 8*1024*1024) return rej(new Error('Video/Photo 8MB se bada hai, chota chun'));
+    let r=new FileReader(); r.onload=e=>{
+      if(file.type.startsWith('image/')){
+        let img=new Image(); img.onload=()=>{
+          let c=document.createElement('canvas'); let max=600; let w=img.width,h=img.height;
+          if(w>max){ h=h*max/w; w=max; } c.width=w; c.height=h; c.getContext('2d').drawImage(img,0,0,w,h);
+          res({url:c.toDataURL('image/jpeg',0.6), type:'image'});
+        }; img.src=e.target.result;
+      } else res({url:e.target.result, type:'video'});
+    }; r.onerror=rej; r.readAsDataURL(file);
   });
-  document.getElementById('postList').innerHTML = html || '<p style="text-align:center;color:gray">Abhi koi post nahi hai, pehla post karo!</p>';
+}
+async function addPost(){
+  try{ msg('Post ho raha hai...');
+    let text=document.getElementById('postText').value.trim(); let f=document.getElementById('postFile').files[0];
+    if(!text && !f) return alert('Kuch likho ya photo/video chuno');
+    let media=''; let mtype='';
+    if(f){ let o=await fileToBase64(f); media=o.url; mtype=o.type; }
+    await db.collection('posts').add({name:getName(), text, media, mtype, likes:0, time:Date.now(), date:new Date().toLocaleString('hi-IN')});
+    await db.collection('notifications').add({text:getName()+' ne naya Post kiya: '+(text||'Photo/Video'), time:Date.now(), forUser:'all'});
+    document.getElementById('postText').value=''; document.getElementById('postFile').value=''; msg('✅ Post ho gaya!');
+  }catch(e){ alert(e.message); }
+}
+async function addStory(){
+  try{ msg('Story lag rahi hai...');
+    let f=document.getElementById('storyFile').files[0]; if(!f) return alert('Photo/Video chuno');
+    let o=await fileToBase64(f);
+    await db.collection('stories').add({name:getName(), media:o.url, mtype:o.type, time:Date.now()});
+    document.getElementById('storyFile').value=''; msg('✅ Story lag gayi!');
+  }catch(e){ alert(e.message); }
+}
+
+// FOLLOW / UNFOLLOW
+async function toggleFollow(targetName, btn){
+  let me=getName(); if(me==targetName) return alert('Khud ko follow nahi kar sakte');
+  let id=me+'_TO_'+targetName; let docRef=db.collection('follows').doc(id);
+  let snap=await docRef.get();
+  if(snap.exists){ await docRef.delete(); msg('Unfollow kar diya'); await db.collection('notifications').add({text:me+' ne '+targetName+' ko Unfollow kiya', time:Date.now(), forUser:'all'}); }
+  else{ await docRef.set({follower:me, following:targetName, time:Date.now()}); msg('✅ Follow ho gaya!'); await db.collection('notifications').add({text:me+' ne '+targetName+' ko Follow kiya', time:Date.now(), forUser:'all'}); }
+}
+async function isFollowing(targetName){
+  let snap=await db.collection('follows').doc(getName()+'_TO_'+targetName).get(); return snap.exists;
+}
+
+// POSTS + LIKE COMMENT SHARE
+db.collection('posts').orderBy('time','desc').onSnapshot(async snap=>{
+  let html='';
+  for(let doc of snap.docs){
+    let p=doc.data(); let id=doc.id; let fol = await isFollowing(p.name);
+    let mediaHtml = p.media ? (p.mtype=='video' ? `<video class="post-video" controls src="${p.media}"></video>` : `<img class="post-img" src="${p.media}">`) : '';
+    html+=`<div class="card"><b>${p.name}</b> <span style="font-size:11px;color:gray">${p.date||''}</span><br>
+    <button style="width:auto;padding:5px 12px;margin-top:5px;font-size:12px" class="${fol?'red':'green'}" onclick="toggleFollow('${p.name}',this)">${fol?'Unfollow':'➕ Follow'}</button>
+    <div style="margin-top:8px">${p.text||''}</div>${mediaHtml}
+    <div class="actions">
+    <button onclick="likePost('${id}',${p.likes||0},'${p.name}')">❤️ Like (${p.likes||0})</button>
+    <button class="gray" onclick="sharePost('${p.text||'DostiBook Post'}')">↗️ Share</button>
+    <button class="red" onclick="deletePost('${id}')">🗑️</button>
+    </div><div id="comments-${id}"></div>
+    <div class="cbox"><input id="c-${id}" placeholder="Comment..."><button onclick="addComment('${id}','${p.name}')">Send</button></div></div>`;
+    loadComments(id);
+  }
+  document.getElementById('postList').innerHTML = html || '<p style="text-align:center;color:gray">Koi post nahi</p>';
 });
-
-function likePost(id, likes){ db.collection('posts').doc(id).update({likes:likes+1}); }
-function deletePost(id){ if(confirm('Delete kare?')) db.collection('posts').doc(id).delete(); }
-
-async function addComment(postId){
-  let inp = document.getElementById('c-'+postId);
-  if(!inp.value.trim()) return;
-  await db.collection('posts').doc(postId).collection('comments').add({name:getName(), text:inp.value, time:Date.now()});
+async function likePost(id,likes,owner){ await db.collection('posts').doc(id).update({likes:likes+1}); await db.collection('notifications').add({text:getName()+' ne '+owner+' ke Post ko Like kiya ❤️', time:Date.now(), forUser:'all'}); }
+function deletePost(id){ if(confirm('Delete?')) db.collection('posts').doc(id).delete(); }
+function sharePost(text){
+  let url = location.href;
+  let shareText = text + ' - DostiBook App: ' + url;
+  if(navigator.share) navigator.share({text:shareText});
+  else{ window.open('https://wa.me/?text='+encodeURIComponent(shareText)); }
+}
+async function addComment(pid,owner){
+  let inp=document.getElementById('c-'+pid); if(!inp.value.trim()) return;
+  await db.collection('posts').doc(pid).collection('comments').add({name:getName(), text:inp.value, time:Date.now()});
+  await db.collection('notifications').add({text:getName()+' ne '+owner+' ke Post par Comment kiya: '+inp.value, time:Date.now(), forUser:'all'});
   inp.value='';
 }
-function loadComments(postId){
-  db.collection('posts').doc(postId).collection('comments').orderBy('time','asc').onSnapshot(s=>{
-    let h='';
-    s.forEach(d=>{ let c=d.data(); h+=`<div class="one-comment"><b>${c.name}:</b> ${c.text}</div>`; });
-    let el=document.getElementById('comments-'+postId);
-    if(el) el.innerHTML=h;
+function loadComments(pid){
+  db.collection('posts').doc(pid).collection('comments').orderBy('time','asc').onSnapshot(s=>{
+    let h=''; s.forEach(d=>{ let c=d.data(); h+=`<div class="one-comment"><b>${c.name}:</b> ${c.text}</div>`; });
+    let el=document.getElementById('comments-'+pid); if(el) el.innerHTML=h;
   });
 }
-
-// STORIES DIKHAO
+// STORIES
 db.collection('stories').orderBy('time','desc').onSnapshot(snap=>{
-  let h='';
-  snap.forEach(doc=>{ let s=doc.data(); h+=`<div class="story" onclick="window.open('${s.img}','_blank')"><img src="${s.img}"><span>${s.name}</span></div>`; });
-  document.getElementById('storyRow').innerHTML = h || '<p style="color:gray;font-size:13px">Koi story nahi hai</p>';
+  let h=''; snap.forEach(doc=>{ let s=doc.data(); let m = s.mtype=='video' ? `<video src="${s.media}" muted></video>` : `<img src="${s.media}">`; h+=`<div class="story" onclick="openStory('${s.media}','${s.mtype||'image'}')">${m}<span>${s.name}</span></div>`; });
+  document.getElementById('storyRow').innerHTML = h || 'Koi story nahi';
 });
+function openStory(media,type){
+  if(type=='video'){ let w=window.open(''); w.document.write(`<video controls autoplay style="width:100%" src="${media}"></video>`); }
+  else window.open(media,'_blank');
+}
+// CHAT
+async function sendChat(){
+  let inp=document.getElementById('chatInput'); if(!inp.value.trim()) return;
+  await db.collection('chats').add({name:getName(), text:inp.value, time:Date.now()});
+  await db.collection('notifications').add({text:getName()+' ne Chat me message bheja', time:Date.now(), forUser:'all'});
+  inp.value='';
+}
+db.collection('chats').orderBy('time','asc').onSnapshot(snap=>{
+  let h=''; snap.forEach(d=>{ let c=d.data(); let me = c.name==getName(); h+=`<div class="chat-msg ${me?'me':''}"><b>${c.name}:</b> ${c.text}</div>`; });
+  document.getElementById('chatList').innerHTML = h || 'Koi chat nahi, pehla message bhejo';
+  document.getElementById('chatList').scrollTop = 99999;
+});
+// NOTIFICATIONS
+db.collection('notifications').orderBy('time','desc').limit(30).onSnapshot(snap=>{
+  let h=''; snap.forEach(d=>{ let n=d.data(); h+=`<div class="noti">🔔 ${n.text}</div>`; });
+  document.getElementById('notiList').innerHTML = h || 'Koi notification nahi';
+  document.getElementById('notiCount').innerText = snap.size; document.getElementById('notiCount').style.display = snap.size>0?'inline':'none';
+  document.getElementById('notiBadge').innerText = snap.size>0 ? `(${snap.size})` : '';
+});
+async function clearNoti(){ let s=await db.collection('notifications').get(); s.forEach(d=>d.ref.delete()); }
+async function loadProfile(){
+  let me=getName();
+  let fol = await db.collection('follows').where('following','==',me).get();
+  let fing = await db.collection('follows').where('follower','==',me).get();
+  document.getElementById('profileStats').innerText = `Followers: ${fol.size} | Following: ${fing.size}`;
+  let h=''; fing.forEach(d=>{ h+=`<div style="padding:8px;border-bottom:1px solid #eee">👤 ${d.data().following} <button style="width:auto;padding:5px 10px;float:right" class="red" onclick="toggleFollow('${d.data().following}')">Unfollow</button></div>`; });
+  document.getElementById('followingList').innerHTML = h || 'Abhi kisi ko follow nahi kiya';
+}
 </script>
 </body>
 </html>
